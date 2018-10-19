@@ -1,30 +1,32 @@
-import React from 'react';
-import FormInput  from "../UI/FormInputs/FormInputs";
-import { Form, Button} from 'react-bootstrap';
+import React from "react";
+import {reduxForm, Field} from "redux-form";
 
 
-function GuestAuth(props) {
+let GuestAuth = (props) => {
 
-  return (
-    <div>
-        <Form>
-            <FormInput
-                title = "LastName"
-                heading = "Last Name"
-                placeholder = "Last Name"/>
-            <FormInput
-                title = "RoomNumber"
-                heading = "Room Number"
-                placeholder = "Your Room Number"/>
-            <Button 
-                type = "submit"
-                onClick = {props.guestAuthClick}> Enter </Button>
-            <Button onClick={props.switchUserHandler}> Switch to Employee Login</Button>
-        </Form>
-
-
-    </div>
-  );
+    //uses Redux Forms
+    const { handleSubmit } = props
+    return (
+        <form onSubmit= {handleSubmit(props.guestAuthClick)}>
+            <div>
+                <label htmlFor="firstName">Last Name</label>
+                <Field name="firstName" component="input" type="text" />
+            </div>
+            <div>
+                <label htmlFor="location">Room Number</label>
+                <Field name="location" component="input" type="text" />
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    );
 }
+    
+
+    
+GuestAuth = reduxForm({
+    form: "guestAuth",
+    destroyOnUnmount: false
+})(GuestAuth)
+
 
 export default GuestAuth;

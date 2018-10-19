@@ -9,8 +9,10 @@ import registerServiceWorker from './registerServiceWorker';
 import {createStore, applyMiddleware, compose, combineReducers} from "redux";
 import {Provider} from "react-redux";
 import authReducer from './store/reducers/auth';
+import workOrdersReducer from './store/reducers/workOrders';
 import thunk from 'redux-thunk';
 import history from './history';
+import {reducer as formReducer} from 'redux-form';
 
 //bootstrap imports
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,7 +20,9 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 
 const rootReducer = combineReducers({
-    auth: authReducer
+    auth: authReducer,
+    workOrders: workOrdersReducer,
+    form: formReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

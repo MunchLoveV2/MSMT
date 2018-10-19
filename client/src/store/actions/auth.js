@@ -44,10 +44,12 @@ export const auth = (username, password, email, isSignup) => {
             password: password,
             email: email
         };
-        let url = "/signup";
-        if (!isSignup) {
-            url = "/login";
+        let url = "/login";
+        if (isSignup) {
+            url = "/signup";
         }
+
+        console.log(url);
         axios.post(url, authData)
             .then(response => {
                 console.log(response.data);

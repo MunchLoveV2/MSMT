@@ -14,7 +14,6 @@ export const renderWorkOrders = (query) => {
     return dispatch => {
         axios.get(query)
         .then(response => {
-            console.log(response);
             dispatch(getWorkOrders(response.data));
         })
 /*         .catch(error => {

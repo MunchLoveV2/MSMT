@@ -1,13 +1,14 @@
-import * as actionTypes from "../actions/actionTypes";
 import { updateObject } from '../utility';
 
 const initialState = {
-    workOrders: []
+    workOrders: null
 }
 
-const getWorkOrders = (state, action) => {
+const reducer = (state, action) => {
     return updateObject( state, {
         workOrders: action.workOrders
         //error: false
     } );
 };
+
+export default reducer;

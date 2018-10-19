@@ -1,54 +1,62 @@
 import React from 'react';
-import FormInput  from "../UI/FormInputs/FormInputs";
-import {Form, Button} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
+import {reduxForm, Field} from "redux-form";
+import Aux from "../../hoc/Aux"; 
 
 
-function GuestAuth(props) {
-    const formElementsArray = props.elements;
-    console.log(formElementsArray);
-    if (!props.isSignup) {
-        formElementsArray.splice(2,1)
-    }
+let EmployeeAuth = (props) => {
 
-    let form = (
-        formElementsArray.map(formElement => (
-            <FormInput 
-                key={formElement.id}
-                heading = {formElement.id}
-                placeholder = {formElement.id}
-                elementConfig={formElement.config.elementConfig}
-                value={formElement.config.value}
-                changed={(event) => props.changed(event, formElement.id)} />
-        ))
-    );
+    const { handleSubmit } = props;
+    return (
+        <Aux>
 
-
-  return (
-    <div>
-        <Form>
-            {form}
+            {/* handleSubmit is given to use by Redux Forms, it helps us 
+            determine what happens after the form is submitted */}
             
-            <Button onClick = {props.employeeAuthClick}>
-              {props.buttonToggle} </Button>
-            
-            <Button 
-                    onClick={props.switchAuthModeHandler}>
-                    SWITCH TO {props.isSignup ? 'SIGNIN' : 'SIGNUP'} </Button>
+            <form onSubmit= {handleSubmit(props.employeeAuthClick)}>
+                <div>
+                    <label htmlFor="username">User Name</label>
+                    <Field name="username" component="input" type="text" />
+                </div>
+                <div>
+                    <label htmlFor="password">Password</label>
+                    <Field name="password" component="input" type="text" />
+                </div>
 
+                {props.isSignup
+                    ? 
+                        <div>
+                            <label htmlFor="email">Email</label>
+                            <Field name="email" component="input" type="text" />
+                        </div>
+                    : null
+                }
+
+                <button type="submit">Submit</button>
+            </form>
+    
+            {/* logout button only shows up if user is in local storage */}     
             {props.isAuth
                 ? <Button 
                 onClick={props.authLogout}> Logout </Button>
                 : null
-            } 
+            }
 
-            <Button onClick = {props.switchUserHandler}>
-              Switch to Guest Login </Button>
-            
-        </Form>
+            {/* // this is the toggle button to determine login vs register */} 
+            <Button 
+                onClick={props.switchAuthModeHandler}>
+                SWITCH TO {props.isSignup ? 'SIGNIN' : 'SIGNUP'} </Button> 
 
-
-    </div>
-  );
+        </Aux>
+    );
 }
+    
 
-export default GuestAuth;
+    
+EmployeeAuth = reduxForm({
+    form: "employeeAuth",
+    destroyOnUnmount: false
+})(EmployeeAuth)
+
+
+export default EmployeeAuth;

@@ -1,11 +1,10 @@
-/* import React, {Component} from "react";
+import React, {Component} from "react";
 import Aux from "../../hoc/Aux";
 import {connect} from "react-redux";
 import * as actions from "../../store/actions/index";
-import axios from "axios"; 
+import WorkOrderTable from "../../components/WorkOrderTable/WorkOrderTable";
 import {withRouter} from "react-router-dom";
 
-import {Form, Button} from 'react-bootstrap';
 
 
 class WorkOrderList extends Component {
@@ -18,11 +17,39 @@ class WorkOrderList extends Component {
 
     render () {
 
+        let workOrders;
+
+        if (!this.props.workOrders) {
+            workOrders = <h1> loading  </h1>
+            
+        } else {
+
+            console.log(this.props.workOrders[0].workOrderImage)
+
+        
+
+
+            workOrders = this.props.workOrders.map(workOrder => {
+                return {
+                    issue: workOrder.title,
+                    category: workOrder.category,
+                    location: workOrder.location,
+                    dateCreated: workOrder.createdAt
+                }
+            })
+            return (
+                <WorkOrderTable workOrders = {workOrders}/>
+            );
+        }
+
+    
+
         return (
 
 
             <Aux>
-                <p> lol </p>
+                {workOrders}
+    
             </Aux>
         );
     }
@@ -31,16 +58,16 @@ class WorkOrderList extends Component {
 
 const mapStateToProps = state => {
     return {
-        userID: state.auth.userId
+        workOrders: state.workOrders.workOrders
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        renderWorkOrders: (query) => dispatch(actions.auth( username, password, email, isSignup ))
+        renderWorkOrders: (query) => dispatch(actions.renderWorkOrders( query ))
     }
 }
 
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WorkOrderList)); */
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WorkOrderList));
