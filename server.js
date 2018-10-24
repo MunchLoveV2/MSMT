@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 
 // Password auth stuffs
 var passport = require("passport");
@@ -8,10 +8,8 @@ var bodyParser = require("body-parser");
 var app = express();
 var PORT = process.env.PORT || 3000;
 // Middleware
-app.use('/uploads', express.static('uploads'));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({limit: "1000mb", extended: true, parameterLimit:1000000}));
-app.use(bodyParser.json({limit: "1000mb"}));
+app.use(bodyParser.json());
 
 // passport password auth stuff
 app.use(
@@ -24,12 +22,23 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+//might need this code for Amazon S3 (at one point)
+/* app.use(
+  "/s3",
+  require("react-s3-uploader/s3router")({
+    bucket: "workorderpictures",
+    region: "us-east-1", //optional
+    ACL: "private", // this is default
+    uniquePrefix: true // (4.0.2 and above) default is true, setting the attribute to false preserves the original filename in S3
+  })
+); */
+
 app.use(function(req, res, next) {
   res.locals.isAuthenticated = req.isAuthenticated();
   next();
 });
 
-const env = require('dotenv').load();
+const env = require("dotenv").load();
 
 //Models
 const db = require("./app/models");
@@ -37,23 +46,21 @@ const db = require("./app/models");
 // routes
 const authRoute = require("./app/routes/auth.js")(app, passport);
 
-//for userfavorites
 require("./app/routes/apiRoutes.js")(app, db.Workorders);
+require("./app/routes/permissionRoutes.js")(app, db.userPermissions);
 
 //load passport strategies
 require("./config/passport.js")(passport, db.Userinfo);
- 
-//Sync Database
-db.sequelize.sync().then(function() {
- 
-    console.log('Nice! Database looks fine')
- 
-}).catch(function(err) {
- 
-    console.log(err, "Something went wrong with the Database Update!")
- 
-});
 
+//Sync Database
+db.sequelize
+  .sync()
+  .then(function() {
+    console.log("Nice! Database looks fine");
+  })
+  .catch(function(err) {
+    console.log(err, "Something went wrong with the Database Update!");
+  });
 
 const port = 5000;
 

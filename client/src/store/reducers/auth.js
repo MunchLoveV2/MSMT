@@ -6,7 +6,7 @@ const initialState = {
     userId: null,
     password: null,
     email: null,
-    loading: false
+    userType: null
 };
 
 const authStart = ( state, action ) => {
@@ -23,15 +23,14 @@ const authSuccess = (state, action) => {
         password: action.password,
         userId: action.userId,
         email: action.email,
-        error: null,
-        loading: false
+        userType: action.userType,
+        error: null
      } );
 };
 
 const authFail = (state, action) => {
     return updateObject( state, {
-        error: action.error,
-        loading: false
+        error: action.error
     });
 }
 

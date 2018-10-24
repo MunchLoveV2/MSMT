@@ -9,7 +9,6 @@ class Guest extends Component {
 
     // for now, just redirects a guest to the work order page
     guestAuthClick = (values) => {
-        console.log(values)
         history.push('/create/');
     };
 

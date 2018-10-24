@@ -27,6 +27,11 @@ module.exports = function(sequelize, DataTypes) {
       required: true,
       len: [1, 100]
     },
+    userType: {
+      type: DataTypes.STRING,
+      required: false,
+      len: [1, 100]
+    },
     createdAt: {
       type: DataTypes.DATE
     },
@@ -38,9 +43,16 @@ module.exports = function(sequelize, DataTypes) {
   
 
   Userinfo.associate = function(models) {
+
     Userinfo.hasMany(models.Workorders, {
       onDelete: "cascade"
     });
+
+    Userinfo.hasMany(models.userPermissions, {
+      onDelete: "cascade"
+    });
+
+
   };
   return Userinfo;
 };

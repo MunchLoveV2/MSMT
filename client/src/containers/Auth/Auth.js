@@ -19,8 +19,7 @@ class Auth extends Component {
     //what happens when an employee clicks "submit"
     employeeAuthClick = (values) => {
 
-        console.log(values)
-        this.props.onAuth(values.username, values.password, values.email, this.state.isSignup);
+        this.props.onAuth(values.username, values.password, values.email, values.userType, this.state.isSignup);
         history.push('/create/');
 
     };
@@ -30,10 +29,7 @@ class Auth extends Component {
     authLogout = () => {
         if(this.props.username) {
             this.props.logOut();
-        } else {
-            alert("no one to log out, dumbass");
-        }
-        
+        } 
     };
 
      //toggles whether the employee is signing up or logging in
@@ -48,23 +44,6 @@ class Auth extends Component {
 
     render () {
 
-        let form;
-        
-        if (this.props.loading) {
-            form = (
-                <h1> loading... </h1>
-            );
-        } else {
-            form = (
-                <EmployeeAuth 
-                isSignup = {this.state.isSignup}
-                switchAuthModeHandler = {this.switchAuthModeHandler}
-                employeeAuthClick = {this.employeeAuthClick}
-                isAuth = {this.props.isAuth}
-                authLogout = {this.authLogout}/>
-            ); 
-    }
-
         let errorMessage = null;
 
         //the eror message is provided to us from passport.js (through redux)
@@ -77,7 +56,12 @@ class Auth extends Component {
 
         return (
             <Aux>
-                {form}
+                <EmployeeAuth 
+                    isSignup = {this.state.isSignup}
+                    switchAuthModeHandler = {this.switchAuthModeHandler}
+                    employeeAuthClick = {this.employeeAuthClick}
+                    isAuth = {this.props.isAuth}
+                    authLogout = {this.authLogout}/>
                 {errorMessage}
             </Aux>
         );
@@ -89,16 +73,15 @@ class Auth extends Component {
 
 const mapStateToProps = state => {
     return {
-        loading: state.auth.loading,
         username: state.auth.username,
         isAuth: state.auth.password !== null,
-        error: state.auth.error
+        error: state.auth.error     
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: ( username, password, email, isSignup ) => dispatch(actions.auth( username, password, email, isSignup )),
+        onAuth: ( username, password, email, userType, isSignup ) => dispatch(actions.auth( username, password, email, userType, isSignup )),
         logOut: () => dispatch(actions.authLogout())
     }
 }

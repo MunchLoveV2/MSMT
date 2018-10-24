@@ -1,10 +1,3 @@
-export {
-    auth,
-    authLogout,
-    authCheckState
-} from "./auth"; 
+export { auth, authLogout, authCheckState } from "./auth";
 
-export {
-    renderWorkOrders
-
-} from './workOrders';
+export { renderWorkOrders, updateWorkOrders } from "./workOrders";

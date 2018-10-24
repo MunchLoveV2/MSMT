@@ -32,7 +32,8 @@ const LocalStrategy = require("passport-local").Strategy;
             const data = {
               username: username,
               password: userPassword,
-              email: req.body.email
+              email: req.body.email,
+              userType: req.body.userType
             };
             Userinfo.create(data).then(function(user) {
               if (!user) {

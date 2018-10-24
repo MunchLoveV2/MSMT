@@ -25,10 +25,16 @@ let EmployeeAuth = (props) => {
 
                 {props.isSignup
                     ? 
+                    <Aux>
                         <div>
                             <label htmlFor="email">Email</label>
                             <Field name="email" component="input" type="text" />
                         </div>
+                        <div>
+                            <label htmlFor="userType">User Type</label>
+                            <Field name="userType" component="input" type="text" />
+                        </div>
+                    </Aux>
                     : null
                 }
 
