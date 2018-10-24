@@ -15,11 +15,14 @@ class WorkOrderList extends Component {
   };
 
   componentDidMount() {
-    //for getting work orders
+    //renderWorkOrders has an axios get request, that hits the "api/workorders" route
+    //the function will then dispatch "getWorkOrders" (see store => actions => workOrders)
+    //getWorkOrder puts work order data in the redux store
     const query = "/api/workorders";
     this.props.renderWorkOrders(query);
 
-    //for getting users
+    //the below axios get request hits the "api/users" route
+    //gets data on all the users puts data in the local state
     axios("/api/users", {
       method: "GET"
     })
@@ -67,6 +70,7 @@ class WorkOrderList extends Component {
     if (!this.props.workOrders || !this.state.users) {
       workOrdersTable = <h1> loading </h1>;
     } else {
+      //once data is stored in the redux store via props.renderWorkOrders, we can access it, and iterate over it
       const workOrdersData = this.props.workOrders.map(workOrder => {
         return {
           id: workOrder.id,
@@ -80,8 +84,10 @@ class WorkOrderList extends Component {
 
       workOrdersTable = (
         <WorkOrderTable
+          // give the above workOrdersData to the workOrderTable component
           workOrders={workOrdersData}
           handleWorkOrderAssign={this.handleWorkOrderAssign}
+          // syntax used based on documentation for WorkOrderTable (component uses third party package)
           ref={node => {
             this.child = node;
           }}
@@ -89,6 +95,8 @@ class WorkOrderList extends Component {
       );
 
       usersSelect = (
+        //Select is a third party package (react-select)
+        // documentation: https://github.com/JedWatson/react-select
         <Select
           value={this.state.selectedUser}
           onChange={this.handleUserSelect}

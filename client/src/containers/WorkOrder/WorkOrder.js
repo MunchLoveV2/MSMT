@@ -8,6 +8,8 @@ import WorkOrderForm from "../../components/WorkOrderForm/WorkOrderForm";
 import CameraApp from "../../components/CameraApp/CameraApp";
 import toFile from "data-uri-to-file";
 
+// below sets up configuration for AWS S3
+// we're using AWS S3 for image uploads in the Work Order
 import AWS from "aws-sdk";
 
 const myCredentials = new AWS.CognitoIdentityCredentials({
@@ -46,7 +48,6 @@ class WorkOrder extends Component {
     }
 
     workOrderData.UserinfoId = userID;
-    //workOrderData.workOrderImage = this.state.imageFile.url
     console.log(workOrderData);
 
     axios(url, {

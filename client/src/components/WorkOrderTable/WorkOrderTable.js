@@ -33,6 +33,9 @@ class WorkOrderTable extends React.Component {
 
     return (
       <div>
+        {/* Link to documentation for this table:
+        https://github.com/react-bootstrap-table/react-bootstrap-table2 */}
+
         <BootstrapTable
           keyField="id"
           ref={node => {

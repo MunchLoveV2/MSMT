@@ -8,6 +8,7 @@ export const getWorkOrders = workOrders => {
   };
 };
 
+//action used to assign work orders to different users
 export const updateWorkOrders = workOrderAssignmentData => {
   return dispatch => {
     axios("/api/workorders", {
