@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Aux  from "../Aux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
+// import NavBar from "../../components/SideBar/SideBar";
+
 
 
 class Layout extends Component {
@@ -10,6 +12,7 @@ class Layout extends Component {
 
         return (
             <Aux>
+                {/* <NavBar/> */}
                 <main>
                     {this.props.children}
                 </main>
