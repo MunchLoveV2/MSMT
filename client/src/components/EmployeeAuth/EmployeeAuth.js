@@ -4,6 +4,19 @@ import { reduxForm, Field } from "redux-form";
 import Aux from "../../hoc/Aux";
 
 let EmployeeAuth = props => {
+  let createUsersButton;
+
+  if (props.userId && props.userPermissions) {
+    props.userPermissions.forEach(permission => {
+      if (permission.Permission.permission === "CREATE-USERS") {
+        console.log(permission.Permission.permission);
+        createUsersButton = (
+          <Button onClick={props.switchAuthModeHandler}>CREATE USER</Button>
+        );
+      }
+    });
+  }
+
   const { handleSubmit } = props;
   return (
     <Aux>
@@ -37,7 +50,9 @@ let EmployeeAuth = props => {
           </Aux>
         ) : null}
 
-        <button type="submit">Submit</button>
+        <button type="submit">
+          {props.isSignup ? "CREATE USER" : "LOGIN"}
+        </button>
       </form>
 
       {/* logout button only shows up if user is in local storage */}
@@ -45,10 +60,8 @@ let EmployeeAuth = props => {
         <Button onClick={props.authLogout}> Logout </Button>
       ) : null}
 
-      {/* // this is the toggle button to determine login vs register */}
-      <Button onClick={props.switchAuthModeHandler}>
-        SWITCH TO {props.isSignup ? "SIGNIN" : "SIGNUP"}{" "}
-      </Button>
+      {/* // this is the toggle button to determine login vs creating a user */}
+      {createUsersButton}
     </Aux>
   );
 };

@@ -22,4 +22,24 @@ module.exports = function(app, userPermissions) {
       });
     });
   });
+  app.get("/api/userpermissions/:id", function(req, res) {
+    db.Userinfo.findOne({
+      include: [
+        {
+          model: db.userPermissions,
+          include: [
+            {
+              model: db.Permissions
+            }
+          ]
+        }
+      ],
+      where: {
+        id: req.params.id
+      }
+    }).then(function(data) {
+      //console.log(data);
+      res.json(data);
+    });
+  });
 };

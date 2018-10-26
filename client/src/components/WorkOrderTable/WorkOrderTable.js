@@ -4,6 +4,17 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
 class WorkOrderTable extends React.Component {
   render() {
+    let assignButton;
+    if (this.props.userId && this.props.userPermissions) {
+      this.props.userPermissions.forEach(permission => {
+        if (permission.Permission.permission === "ASSIGN-TASKS") {
+          assignButton = (
+            <button onClick={this.props.handleWorkOrderAssign}>Assign</button>
+          );
+        }
+      });
+    }
+
     const columns = [
       {
         dataField: "id",
@@ -24,6 +35,10 @@ class WorkOrderTable extends React.Component {
       {
         dataField: "assignedTo",
         text: "Assigned To"
+      },
+      {
+        dataField: "status",
+        text: "Status"
       }
     ];
 
@@ -33,6 +48,10 @@ class WorkOrderTable extends React.Component {
 
     return (
       <div>
+        {/* This is a table that is given to us via a third party package.
+        It's packed with cool features, but I'm not in love with. Might 
+        need to just build the table ourselves. */}
+
         {/* Link to documentation for this table:
         https://github.com/react-bootstrap-table/react-bootstrap-table2 */}
 
@@ -44,8 +63,13 @@ class WorkOrderTable extends React.Component {
           data={this.props.workOrders}
           columns={columns}
           selectRow={selectRow}
+          onClick={(e, row, rowIndex) => {
+            console.log(`clicked on row with index: ${rowIndex}`);
+          }}
         />
-        <button onClick={this.props.handleWorkOrderAssign}>Assign</button>
+
+        <button onClick={this.props.handleWorkOrderEdit}>Edit</button>
+        {assignButton}
       </div>
     );
   }

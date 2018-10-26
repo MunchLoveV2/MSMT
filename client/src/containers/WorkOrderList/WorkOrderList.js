@@ -11,7 +11,9 @@ import axios from "axios";
 class WorkOrderList extends Component {
   state = {
     selectedUser: null,
-    users: null
+    selectedWorkOrder: null,
+    users: null,
+    currentWorkOrder: null
   };
 
   componentDidMount() {
@@ -27,7 +29,6 @@ class WorkOrderList extends Component {
       method: "GET"
     })
       .then(response => {
-        console.log(response.data);
         const users = response.data.map(user => {
           return {
             label: user.username,
@@ -41,53 +42,101 @@ class WorkOrderList extends Component {
       });
   }
 
-  //gets the user that is selected (via Select) and sets state (selectedUser)
+  // gets the user that is selected (via Select) and sets state (selectedUser)
   handleUserSelect = selectedUser => {
     this.setState({ selectedUser });
   };
 
+  // we use this function to get the information (in SQL) of the work order that is selected
+  // we grab it from SQL and then put it into redux via props.getCurrentWorkOrder
+  handleWorkOrderEdit = () => {
+    // below syntax looks funky, I know, but I got it from the documentation of
+    // the bootstrap table (see components => WorkOrderTable)
+    const workOrderIds = this.child.node.selectionContext.state.selected;
+
+    if (workOrderIds.length > 1) {
+      alert("Can only edit one work order at once!");
+    } else {
+      axios
+        .get("/api/workorders/" + workOrderIds[0])
+        .then(response => {
+          console.log(response.data);
+          //puts the current work order data into Redux
+          this.props.getCurrentWorkOrder(response.data);
+          this.props.history.replace("/edit/");
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
+
   //gets the workorder that is selected (via WorkOrderTable)
-  //posts to workOrderAssignments SQL table
+  //POST or PUT to workOrderAssignments SQL table
   handleWorkOrderAssign = () => {
+    // below syntax looks funky, I know, but I got it from the documentation of
+    // the bootstrap table (see components => WorkOrderTable)
     const workOrderIds = this.child.node.selectionContext.state.selected;
     const selectedUser = this.state.selectedUser;
 
-    const workOrderAssignmentData = workOrderIds.map(workOrderId => {
-      return {
-        userId: selectedUser.value,
-        workOrderId: workOrderId
-      };
-    });
+    if (!selectedUser || workOrderIds.length === 0) {
+      alert("You have not selected a user or work order!");
+    } else {
+      // we need to use the map method because there might be more than
+      // 1 work order that is selected
+      const workOrderAssignmentData = workOrderIds.map(workOrderId => {
+        return {
+          userId: selectedUser.value,
+          workOrderId: workOrderId
+        };
+      });
 
-    this.props.updateWorkOrders(workOrderAssignmentData);
+      // props.assignWorkOrders is used to either POST or PUT to workOrderAssignments SQL table
+      // see store => workOrders
+      this.props.assignWorkOrders(workOrderAssignmentData);
+    }
   };
 
   render() {
     let workOrdersTable;
     let usersSelect;
+    let workOrdersData = [];
 
     //data needs to be loaded before anything can be rendered onto the page
     if (!this.props.workOrders || !this.state.users) {
       workOrdersTable = <h1> loading </h1>;
     } else {
-      //once data is stored in the redux store via props.renderWorkOrders, we can access it, and iterate over it
-      const workOrdersData = this.props.workOrders.map(workOrder => {
-        return {
+      //once data is stored in the redux store.... via props.renderWorkOrders, we can access it, and iterate over it
+      this.props.workOrders.forEach(workOrder => {
+        let item = {
           id: workOrder.id,
           issue: workOrder.title,
+          status: workOrder.status,
           category: workOrder.category,
           location: workOrder.location,
-          dateCreated: workOrder.createdAt,
-          assignedTo: workOrder.assignedTo
+          dateCreated: workOrder.createdAt
         };
+
+        // the workorder is either set as unassigned, or gets assigned user in SQL
+        if (workOrder.workOrderAssignment) {
+          item.assignedTo = workOrder.workOrderAssignment.Userinfo.username;
+        } else {
+          item.assignedTo = "unassigned";
+        }
+
+        workOrdersData.push(item);
       });
 
       workOrdersTable = (
         <WorkOrderTable
           // give the above workOrdersData to the workOrderTable component
+          userId={this.props.userId}
+          userPermissions={this.props.userPermissions}
           workOrders={workOrdersData}
+          onChange={this.handleWorkOrderSelect}
+          handleWorkOrderEdit={this.handleWorkOrderEdit}
           handleWorkOrderAssign={this.handleWorkOrderAssign}
-          // syntax used based on documentation for WorkOrderTable (component uses third party package)
+          // syntax used based on documentation for WorkOrderTable (looks funky, I know)
           ref={node => {
             this.child = node;
           }}
@@ -117,15 +166,19 @@ class WorkOrderList extends Component {
 const mapStateToProps = state => {
   return {
     workOrders: state.workOrders.workOrders,
-    users: state.auth.users
+    users: state.auth.users,
+    userId: state.auth.userId,
+    userPermissions: state.auth.userPermissions
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     renderWorkOrders: query => dispatch(actions.renderWorkOrders(query)),
-    updateWorkOrders: updatedWorkOrders =>
-      dispatch(actions.updateWorkOrders(updatedWorkOrders))
+    assignWorkOrders: updatedWorkOrders =>
+      dispatch(actions.assignWorkOrders(updatedWorkOrders)),
+    getCurrentWorkOrder: currentWorkOrder =>
+      dispatch(actions.getCurrentWorkOrder(currentWorkOrder))
   };
 };
 

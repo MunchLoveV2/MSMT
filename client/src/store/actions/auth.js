@@ -1,13 +1,7 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
 
-//we actually might not need this, possibly will remove this
-export const authStart = () => {
-  return {
-    type: actionTypes.AUTH_START
-  };
-};
-
+// puts the info of the user that is logged in into Redux
 export const authSuccess = (username, password, email, id) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
@@ -32,6 +26,7 @@ export const authLogout = (username, password, email) => {
   };
 };
 
+//error message comes from passport
 export const authFail = error => {
   return {
     type: actionTypes.AUTH_FAIL,
@@ -39,9 +34,9 @@ export const authFail = error => {
   };
 };
 
+// **WARNING - incoming long lines of code~~~~~!!!~!~!~!~!~
 export const auth = (username, password, email, userType, isSignup) => {
   return dispatch => {
-    dispatch(authStart());
     const authData = {
       username: username,
       password: password,
@@ -49,7 +44,7 @@ export const auth = (username, password, email, userType, isSignup) => {
       userType: userType
     };
 
-    //url route depends on whether the user is logging in, or signing up
+    // url route depends on whether the user is logging in, or signing up
     let url = "/login";
     if (isSignup) {
       url = "/signup";
@@ -74,6 +69,8 @@ export const auth = (username, password, email, userType, isSignup) => {
               response.data.userType
             )
           );
+
+          dispatch(authfetchUserPermissions(response.data.id));
 
           //this block of code below sets up user permissions when an account is created
           // first checks if the user is registering
@@ -107,6 +104,20 @@ export const auth = (username, password, email, userType, isSignup) => {
   };
 };
 
+export const authfetchUserPermissions = userId => {
+  return dispatch => {
+    const url = "/api/userpermissions/" + userId;
+    axios.get(url).then(response => {
+      dispatch(
+        authGetUserPermissions(
+          response.data.userPermissions,
+          response.data.userType
+        )
+      );
+    });
+  };
+};
+
 //this automatically logs a user in by checking local storage
 //allows for persistent login (i.e. if the browser is closed)
 export const authCheckState = () => {
@@ -117,7 +128,16 @@ export const authCheckState = () => {
     } else {
       const username = localStorage.getItem("username");
       const userId = localStorage.getItem("userId");
+
       dispatch(authSuccess(username, token, null, userId));
     }
+  };
+};
+
+export const authGetUserPermissions = (userPermissions, userType) => {
+  return {
+    type: actionTypes.AUTH_GET_USER_PERMISSIONS,
+    userPermissions: userPermissions,
+    userType: userType
   };
 };

@@ -2,7 +2,8 @@ import { updateObject } from "../utility";
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  workOrders: null
+  workOrders: [],
+  currentWorkOrder: null
 };
 
 const getWorkOrders = (state, action) => {
@@ -12,9 +13,9 @@ const getWorkOrders = (state, action) => {
   });
 };
 
-const updateWorkOrders = (state, action) => {
+const getCurrentWorkOrder = (state, action) => {
   return updateObject(state, {
-    workOrders: action.workOrders
+    currentWorkOrder: action.currentWorkOrder
     //error: false
   });
 };
@@ -23,8 +24,8 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_WORK_ORDERS:
       return getWorkOrders(state, action);
-    case actionTypes.UPDATE_WORK_ORDERS:
-      return updateWorkOrders(state, action);
+    case actionTypes.GET_CURRENT_WORK_ORDER:
+      return getCurrentWorkOrder(state, action);
     default:
       return state;
   }
