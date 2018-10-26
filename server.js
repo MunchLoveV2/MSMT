@@ -46,7 +46,7 @@ const db = require("./app/models");
 // routes
 const authRoute = require("./app/routes/auth.js")(app, passport);
 
-require("./app/routes/apiRoutes.js")(app, db.Workorders);
+const apiRoute = require("./app/routes/apiRoutes.js")(app);
 require("./app/routes/permissionRoutes.js")(app, db.userPermissions);
 
 //load passport strategies

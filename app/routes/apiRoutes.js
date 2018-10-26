@@ -1,15 +1,18 @@
-module.exports = function(app, workorders) {
+var db = require("../models");
+
+module.exports = function(app, workorder) {
   app.post("/api/workorders", function(req, res) {
     console.log(req.body);
-    workorders.create(req.body).then(function(data) {
+    workorder.create(req.body).then(function(data) {
       res.json(data);
     });
   });
 
   app.put("/api/workorders", function(req, res) {
-    workOrderAssignments = req.body;
+    let workOrderAssignments = req.body;
+    console.log(workOrderAssignments);
 
-    let assignmentsArray = workOrderAssignments.forEach(workOrderAssignment => {
+    workOrderAssignments.forEach(workOrderAssignment => {
       workorders
         .update(
           { assignedTo: workOrderAssignment.userId },

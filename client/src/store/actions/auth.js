@@ -70,7 +70,8 @@ export const auth = (username, password, email, userType, isSignup) => {
               response.data.username,
               response.data.password,
               response.data.email,
-              response.data.id
+              response.data.id,
+              response.data.userType
             )
           );
 
