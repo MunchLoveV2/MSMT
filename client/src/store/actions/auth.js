@@ -80,7 +80,8 @@ export const auth = (username, password, email, userType, isSignup) => {
           if (url === "/signup") {
             //grabs the userID of the authenticated user
             let userPermissionsData = {
-              UserinfoId: response.data.id
+              UserinfoId: response.data.id,
+              PermissionId: []
             };
 
             //grabs the userType (admin, supervisor, user, etc)
@@ -89,9 +90,16 @@ export const auth = (username, password, email, userType, isSignup) => {
             //looks in the UserTypes table to grab the specific permissions based on the userType
             axios.get("/api/usertypes/" + userType).then(response => {
               //once we have the permissions, we add it to the userPermissionsData object above
-              userPermissionsData.permissions =
+              console.log(
+                "THIS is the get from usertypes to get defaultPermissions data>>>>>>>>",
+                response.data.defaultPermissions
+              );
+              userPermissionsData.PermissionId =
                 response.data.defaultPermissions;
-
+              console.log(
+                "THIS is userPermissionsData Object>>>>>>>",
+                userPermissionsData
+              );
               //and then we post it to the userPermissions table
               axios
                 .post("/api/userpermissions", userPermissionsData)

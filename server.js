@@ -41,16 +41,16 @@ app.use(function(req, res, next) {
 const env = require("dotenv").load();
 
 //Models
-const db = require("./app/models");
+const db = require("./server/models");
 
 // routes
-const authRoute = require("./app/routes/auth.js")(app, passport);
+const authRoute = require("./server/routes/auth.js")(app, passport);
 
-const apiRoute = require("./app/routes/apiRoutes.js")(app);
-require("./app/routes/permissionRoutes.js")(app, db.userPermissions);
+require("./server/routes/apiRoutes.js")(app, db.workorders);
+require("./server/routes/permissionRoutes.js")(app, db.userPermissions);
 
 //load passport strategies
-require("./config/passport.js")(passport, db.Userinfo);
+require("./server/passport.js")(passport, db.Userinfo);
 
 //Sync Database
 db.sequelize

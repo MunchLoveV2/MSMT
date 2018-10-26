@@ -1,9 +1,7 @@
-var db = require("../models");
-
-module.exports = function(app, workorder) {
+module.exports = function(app, workorders) {
   app.post("/api/workorders", function(req, res) {
     console.log(req.body);
-    workorder.create(req.body).then(function(data) {
+    workorders.create(req.body).then(function(data) {
       res.json(data);
     });
   });
