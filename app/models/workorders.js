@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
     title: DataTypes.TEXT,
     category: DataTypes.TEXT,
     location: DataTypes.TEXT,
-    assignedTo: DataTypes.TEXT
+    status: DataTypes.TEXT
   });
 
   Workorders.associate = function(models) {
@@ -11,6 +11,10 @@ module.exports = function(sequelize, DataTypes) {
       foreignKey: {
         allowNull: false
       }
+    });
+
+    Workorders.hasOne(models.workOrderAssignments, {
+      onDelete: "cascade"
     });
   };
   return Workorders;

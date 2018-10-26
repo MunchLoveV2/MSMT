@@ -6,25 +6,6 @@ module.exports = function(app, workorders) {
     });
   });
 
-  app.put("/api/workorders", function(req, res) {
-    workOrderAssignments = req.body;
-
-    let assignmentsArray = workOrderAssignments.forEach(workOrderAssignment => {
-      workorders
-        .update(
-          { assignedTo: workOrderAssignment.userId },
-          {
-            where: {
-              id: workOrderAssignment.workOrderId
-            }
-          }
-        )
-        .then(function(data) {
-          res.send(data);
-        });
-    });
-  });
-
   /* app.get("/api/workorders", function(req, res) {
     console.log("lol");
     workorders.findAll({}).then(function(data) {
