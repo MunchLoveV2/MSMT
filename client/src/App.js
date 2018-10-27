@@ -17,7 +17,7 @@ class App extends Component {
 
   render() {
     if (this.props.userId) {
-      this.props.authfetchUserPermissions(this.props.userId);
+      this.props.authFetchUserPermissions(this.props.userId);
     }
 
     return (
@@ -45,8 +45,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onTryAutoSignup: () => dispatch(actions.authCheckState()),
-    authfetchUserPermissions: userId =>
-      dispatch(actions.authfetchUserPermissions(userId))
+    authFetchUserPermissions: userId =>
+      dispatch(actions.authFetchUserPermissions(userId))
   };
 };
 

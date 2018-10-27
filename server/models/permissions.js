@@ -3,5 +3,11 @@ module.exports = function(sequelize, DataTypes) {
     permission: DataTypes.TEXT
   });
 
+  Permissions.associate = function(models) {
+    Permissions.hasMany(models.userPermissions, {
+      onDelete: "cascade"
+    });
+  };
+
   return Permissions;
 };

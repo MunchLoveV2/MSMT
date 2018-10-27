@@ -70,7 +70,7 @@ export const auth = (username, password, email, userType, isSignup) => {
             )
           );
 
-          dispatch(authfetchUserPermissions(response.data.id));
+          dispatch(authFetchUserPermissions(response.data.id));
 
           //this block of code below sets up user permissions when an account is created
           // first checks if the user is registering
@@ -86,8 +86,7 @@ export const auth = (username, password, email, userType, isSignup) => {
             //looks in the UserTypes table to grab the specific permissions based on the userType
             axios.get("/api/usertypes/" + userType).then(response => {
               //once we have the permissions, we add it to the userPermissionsData object above
-              userPermissionsData.PermissionId =
-                response.data.defaultPermissions;
+              userPermissionsData.permissions = response.data.PermissionId;
               //and then we post it to the userPermissions table
               axios.post("/api/userpermissions", userPermissionsData);
             });
@@ -104,10 +103,11 @@ export const auth = (username, password, email, userType, isSignup) => {
   };
 };
 
-export const authfetchUserPermissions = userId => {
+export const authFetchUserPermissions = userId => {
   return dispatch => {
     const url = "/api/userpermissions/" + userId;
     axios.get(url).then(response => {
+      console.log(response.data);
       dispatch(
         authGetUserPermissions(
           response.data.userPermissions,

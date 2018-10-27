@@ -3,7 +3,8 @@ module.exports = function(sequelize, DataTypes) {
     title: DataTypes.TEXT,
     category: DataTypes.TEXT,
     location: DataTypes.TEXT,
-    status: DataTypes.TEXT
+    status: DataTypes.TEXT,
+    pictureData: DataTypes.BLOB
   });
 
   Workorders.associate = function(models) {

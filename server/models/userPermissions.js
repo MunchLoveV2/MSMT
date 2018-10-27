@@ -1,10 +1,13 @@
 module.exports = function(sequelize, DataTypes) {
-  const userPermissions = sequelize.define("userPermissions", {
-    PermissionId: DataTypes.TEXT
-  });
+  const userPermissions = sequelize.define("userPermissions", {});
 
   userPermissions.associate = function(models) {
     userPermissions.belongsTo(models.Userinfo, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+    userPermissions.belongsTo(models.Permissions, {
       foreignKey: {
         allowNull: false
       }

@@ -1,8 +1,8 @@
 require("dotenv").config();
-const bCrypt = require("bcrypt");
+// const bCrypt = require("bcrypt");
 module.exports = function(passport, userinfo) {
-const Userinfo = userinfo;
-const LocalStrategy = require("passport-local").Strategy;
+  const Userinfo = userinfo;
+  const LocalStrategy = require("passport-local").Strategy;
 
   passport.use(
     "local-signup",
@@ -14,24 +14,24 @@ const LocalStrategy = require("passport-local").Strategy;
         passReqToCallback: true // allows us to pass back the entire request to the callback
       },
       function(req, username, password, done) {
-        const generateHash = function(password) {
-          return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
-        };
+        // const generateHash = function(password) {
+        //   return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
+        // };
         Userinfo.findOne({
           where: {
             username: username
           }
         }).then(function(user) {
           if (user) {
-            console.log("didn't work")
+            console.log("didn't work");
             return done(null, false, {
               message: "That username is already taken"
             });
           } else {
-            const userPassword = generateHash(password);
+            // const userPassword = generateHash(password);
             const data = {
               username: username,
-              password: userPassword,
+              password: password,
               email: req.body.email,
               userType: req.body.userType
             };
@@ -50,7 +50,7 @@ const LocalStrategy = require("passport-local").Strategy;
   );
 
   passport.serializeUser(function(user, done) {
-    console.log("serialize" + user.id)
+    console.log("serialize" + user.id);
     done(null, user.id);
   });
 
@@ -60,7 +60,7 @@ const LocalStrategy = require("passport-local").Strategy;
         id: id
       }
     }).then(function(user) {
-      console.log("deserialize" + user.id)
+      console.log("deserialize" + user.id);
       if (user) {
         done(null, user.get());
       } else {
@@ -80,9 +80,9 @@ const LocalStrategy = require("passport-local").Strategy;
       },
       function(req, username, password, done) {
         const Userinfo = userinfo;
-        const isValidPassword = function(accountKey, password) {
-          return bCrypt.compareSync(password, accountKey);
-        };
+        // const isValidPassword = function(accountKey, password) {
+        //   return bCrypt.compareSync(password, accountKey);
+        // };
         Userinfo.findOne({
           where: {
             username: username
@@ -94,11 +94,12 @@ const LocalStrategy = require("passport-local").Strategy;
                 message: "Username does not exist"
               });
             }
-            if (!isValidPassword(user.password, password)) {
-              return done(null, false, {
-                message: "Incorrect password."
-              });
-            } else {
+            // if (!isValidPassword(user.password, password)) {
+            //   return done(null, false, {
+            //     message: "Incorrect password."
+            //   });
+            // }
+            else {
               user.get();
               console.log("PASSPORT>>>>>>>", user.id);
               return done(null, user);

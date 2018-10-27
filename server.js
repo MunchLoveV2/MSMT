@@ -3,12 +3,10 @@ const express = require("express");
 // Password auth stuffs
 var passport = require("passport");
 var session = require("express-session");
-var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var app = express();
 var PORT = process.env.PORT || 3000;
 // Middleware
-app.use(cookieParser());
 app.use(bodyParser.json());
 
 // passport password auth stuff
