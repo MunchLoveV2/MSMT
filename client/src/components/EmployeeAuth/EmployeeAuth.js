@@ -6,6 +6,8 @@ import "react-widgets/dist/css/react-widgets.css";
 import Aux from "../../hoc/Aux";
 
 let EmployeeAuth = props => {
+  // block of text below is logic for rendering the CREATE USER button
+  // depending on the permissions of the user that is logged in
   let createUsersButton;
 
   if (props.userId && props.userPermissions) {
@@ -20,12 +22,15 @@ let EmployeeAuth = props => {
 
   const { handleSubmit } = props;
 
+  // this users object is used for the dropdown (via Redux Form)
   const users = [
     { user: "Admin", value: "ADMIN" },
     { user: "Supervisor", value: "SUPERVISOR" },
     { user: "User", value: "USER" }
   ];
 
+  // provided by the documentation from Redux Form (using react-widgets)
+  // https://redux-form.com/7.4.2/examples/react-widgets/
   const renderDropdownList = ({ input, data, valueField, textField }) => (
     <DropdownList
       {...input}
@@ -38,11 +43,11 @@ let EmployeeAuth = props => {
 
   return (
     <Aux>
-      {/* handleSubmit is given to use by Redux Forms, it helps us 
+      {/* handleSubmit is given to use by Redux Form, it helps us 
             determine what happens after the form is submitted */}
 
       {/* we pass in employeeAuthClick (see container Auth), which
-            is executed after the form is submitted by Redux Forms */}
+            is executed after the form is submitted by Redux Form */}
 
       <form onSubmit={handleSubmit(props.employeeAuthClick)}>
         <div>
@@ -54,7 +59,8 @@ let EmployeeAuth = props => {
           <Field name="password" component="input" type="text" />
         </div>
 
-        {/* Below fields only show up when the user is signing up */}
+        {/* Below fields only show up when the user is signing up 
+             (when the CREATE USER button is clicked)    */}
         {props.isSignup ? (
           <Aux>
             <div>
@@ -84,7 +90,7 @@ let EmployeeAuth = props => {
         <Button onClick={props.authLogout}> Logout </Button>
       ) : null}
 
-      {/* // this is the toggle button to determine login vs creating a user */}
+      {/* CREATE USER button */}
       {createUsersButton}
     </Aux>
   );

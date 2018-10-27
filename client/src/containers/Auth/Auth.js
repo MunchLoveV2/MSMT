@@ -6,7 +6,8 @@ import { withRouter } from "react-router-dom";
 import EmployeeAuth from "../../components/EmployeeAuth/EmployeeAuth";
 
 class Auth extends Component {
-  //toggles between register and login
+  // this state gets toggled when the CREATE USER button clicked
+  // (see component => EmployeeAuth => EmployeeAuth)
   state = {
     isSignup: false
   };
@@ -18,7 +19,7 @@ class Auth extends Component {
     if (this.state.isSignup) {
       userType = values.userType.value;
     }
-    //console.log(values.userType.value);
+
     this.props.onAuth(
       values.username,
       values.password,
@@ -70,8 +71,6 @@ class Auth extends Component {
     );
   }
 }
-
-//redux stuff
 
 const mapStateToProps = state => {
   return {

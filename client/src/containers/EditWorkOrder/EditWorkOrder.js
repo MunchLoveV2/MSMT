@@ -18,7 +18,6 @@ class EditWorkOrder extends Component {
   render() {
     // need to declare separate variable here because we get "this.props.currentWorkOrder" asynchronously
     // this.props.currentWorkOrder gives us access to the specific work order's information
-    // for a better idea, check out  handleCurrentWorkOrder in container => WorkOrderList => WorkOrderList
 
     let title;
 

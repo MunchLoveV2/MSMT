@@ -4,6 +4,8 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
 class WorkOrderTable extends React.Component {
   render() {
+    // below block of code is the logic for rendering the assign button
+    // depending on the permissions of the user that is logged in
     let assignButton;
     if (this.props.userId && this.props.userPermissions) {
       console.log(this.props.userId);
