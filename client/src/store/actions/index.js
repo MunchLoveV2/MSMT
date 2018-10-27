@@ -2,7 +2,7 @@ export {
   auth,
   authLogout,
   authCheckState,
-  authFetchUserPermissions
+  authfetchUserPermissions
 } from "./auth";
 
 export {

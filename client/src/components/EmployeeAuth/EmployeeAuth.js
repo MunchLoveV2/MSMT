@@ -1,6 +1,8 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { reduxForm, Field } from "redux-form";
+import DropdownList from "react-widgets/lib/DropdownList";
+import "react-widgets/dist/css/react-widgets.css";
 import Aux from "../../hoc/Aux";
 
 let EmployeeAuth = props => {
@@ -9,7 +11,6 @@ let EmployeeAuth = props => {
   if (props.userId && props.userPermissions) {
     props.userPermissions.forEach(permission => {
       if (permission.Permission.permission === "CREATE-USERS") {
-        console.log(permission.Permission.permission);
         createUsersButton = (
           <Button onClick={props.switchAuthModeHandler}>CREATE USER</Button>
         );
@@ -18,6 +19,23 @@ let EmployeeAuth = props => {
   }
 
   const { handleSubmit } = props;
+
+  const users = [
+    { user: "Admin", value: "ADMIN" },
+    { user: "Supervisor", value: "SUPERVISOR" },
+    { user: "User", value: "USER" }
+  ];
+
+  const renderDropdownList = ({ input, data, valueField, textField }) => (
+    <DropdownList
+      {...input}
+      data={data}
+      valueField={valueField}
+      textField={textField}
+      onChange={input.onChange}
+    />
+  );
+
   return (
     <Aux>
       {/* handleSubmit is given to use by Redux Forms, it helps us 
@@ -45,7 +63,13 @@ let EmployeeAuth = props => {
             </div>
             <div>
               <label htmlFor="userType">User Type</label>
-              <Field name="userType" component="input" type="text" />
+              <Field
+                name="userType"
+                component={renderDropdownList}
+                data={users}
+                valueField="value"
+                textField="user"
+              />
             </div>
           </Aux>
         ) : null}
@@ -67,7 +91,7 @@ let EmployeeAuth = props => {
 };
 
 EmployeeAuth = reduxForm({
-  form: "employeeAuth",
+  form: "EmployeeAuth",
   destroyOnUnmount: false
 })(EmployeeAuth);
 

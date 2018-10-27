@@ -16,6 +16,10 @@ class App extends Component {
   }
 
   render() {
+    if (this.props.userId) {
+      this.props.authfetchUserPermissions(this.props.userId);
+    }
+
     return (
       <div>
         <Layout>
@@ -33,13 +37,16 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.password !== null
+    isAuthenticated: state.auth.password !== null,
+    userId: state.auth.userId
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onTryAutoSignup: () => dispatch(actions.authCheckState())
+    onTryAutoSignup: () => dispatch(actions.authCheckState()),
+    authfetchUserPermissions: userId =>
+      dispatch(actions.authfetchUserPermissions(userId))
   };
 };
 

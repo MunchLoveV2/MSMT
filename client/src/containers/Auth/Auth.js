@@ -13,14 +13,23 @@ class Auth extends Component {
 
   //what happens when an employee clicks "submit"
   employeeAuthClick = values => {
+    let userType;
+
+    if (this.state.isSignup) {
+      userType = values.userType.value;
+    }
+    //console.log(values.userType.value);
     this.props.onAuth(
       values.username,
       values.password,
       values.email,
-      values.userType,
+      userType,
       this.state.isSignup
     );
-    this.props.history.replace("/workorders/");
+
+    if (!this.state.isSignup) {
+      this.props.history.replace("/workorders/");
+    }
   };
 
   //uses Redux to log out the employee (if logged in)

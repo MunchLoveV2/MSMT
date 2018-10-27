@@ -36,6 +36,7 @@ export const authFail = error => {
 
 // **WARNING - incoming long lines of code~~~~~!!!~!~!~!~!~
 export const auth = (username, password, email, userType, isSignup) => {
+  let userId;
   return dispatch => {
     const authData = {
       username: username,
@@ -54,22 +55,27 @@ export const auth = (username, password, email, userType, isSignup) => {
       .post(url, authData)
       .then(response => {
         //puts user information into local storage after authentication
-        localStorage.setItem("token", response.data.password);
-        localStorage.setItem("username", response.data.username);
-        localStorage.setItem("userId", response.data.id);
+
+        if (url === "/login") {
+          localStorage.setItem("token", response.data.password);
+          localStorage.setItem("username", response.data.username);
+          localStorage.setItem("userId", response.data.id);
+        }
 
         //if there is no response, it will dispatch a failure (see below)
-        if (response.data.username) {
+        if (response.data.username && url === "/login") {
+          userId = response.data.id;
           dispatch(
             authSuccess(
               response.data.username,
               response.data.password,
               response.data.email,
-              response.data.id
+              userId,
+              response.data.userType
             )
           );
 
-          dispatch(authfetchUserPermissions(response.data.id));
+          dispatch(authfetchUserPermissions(userId));
 
           //this block of code below sets up user permissions when an account is created
           // first checks if the user is registering
@@ -85,15 +91,11 @@ export const auth = (username, password, email, userType, isSignup) => {
             //looks in the UserTypes table to grab the specific permissions based on the userType
             axios.get("/api/usertypes/" + userType).then(response => {
               //once we have the permissions, we add it to the userPermissionsData object above
-              userPermissionsData.permissions =
+              userPermissionsData.PermissionId =
                 response.data.defaultPermissions;
-
+              console.log(response.data);
               //and then we post it to the userPermissions table
-              axios
-                .post("/api/userpermissions", userPermissionsData)
-                .then(response => {
-                  console.log(response.data);
-                });
+              axios.post("/api/userpermissions", userPermissionsData);
             });
           }
         } else {
@@ -112,6 +114,7 @@ export const authfetchUserPermissions = userId => {
   return dispatch => {
     const url = "/api/userpermissions/" + userId;
     axios.get(url).then(response => {
+      console.log(response.data);
       dispatch(
         authGetUserPermissions(
           response.data.userPermissions,
@@ -134,7 +137,6 @@ export const authCheckState = () => {
       const userId = localStorage.getItem("userId");
 
       dispatch(authSuccess(username, token, null, userId));
-      dispatch(authfetchUserPermissions(userId));
     }
   };
 };

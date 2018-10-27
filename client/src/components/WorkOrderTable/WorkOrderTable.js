@@ -6,6 +6,8 @@ class WorkOrderTable extends React.Component {
   render() {
     let assignButton;
     if (this.props.userId && this.props.userPermissions) {
+      console.log(this.props.userId);
+      console.log(this.props.userPermissions);
       this.props.userPermissions.forEach(permission => {
         if (permission.Permission.permission === "ASSIGN-TASKS") {
           assignButton = (
