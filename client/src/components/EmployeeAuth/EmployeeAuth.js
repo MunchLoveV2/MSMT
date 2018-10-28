@@ -57,7 +57,7 @@ let EmployeeAuth = props => {
     });
   }
 
-  const { handleSubmit } = props;
+  const { handleSubmit, submitting } = props;
 
   // this users object is used for the dropdown (via Redux Form)
   const users = [
@@ -94,6 +94,7 @@ let EmployeeAuth = props => {
           component={renderField}
           label="Password"
           type="text"
+          validate={[required]}
         />
 
         {/* Below fields only show up when the user is signing up 
@@ -105,6 +106,7 @@ let EmployeeAuth = props => {
               component={renderField}
               label="Email"
               type="text"
+              validate={[required]}
             />
 
             <Field
@@ -118,7 +120,7 @@ let EmployeeAuth = props => {
           </Aux>
         ) : null}
 
-        <button type="submit">
+        <button type="submit" disabled={submitting}>
           {props.isSignup ? "CREATE USER" : "LOGIN"}
         </button>
       </form>

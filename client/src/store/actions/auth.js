@@ -55,8 +55,9 @@ export const auth = (username, password, email, userType, isSignup) => {
       .post(url, authData)
 
       .then(response => {
+        console.log(response.data);
         //puts user information into local storage after authentication
-        if (url === "/login") {
+        if (url === "/login" && response.data.username) {
           localStorage.setItem("token", response.data.password);
           localStorage.setItem("username", response.data.username);
           localStorage.setItem("userId", response.data.id);
@@ -76,7 +77,7 @@ export const auth = (username, password, email, userType, isSignup) => {
           );
 
           dispatch(authfetchUserPermissions(userId));
-          console.log(url);
+          this.props.history.replace("/workorders/");
           //this block of code below sets up user permissions when an account is created
           // first checks if the user is registering
         } else {
@@ -130,7 +131,7 @@ export const authfetchUserPermissions = userId => {
 export const authCheckState = () => {
   return dispatch => {
     const token = localStorage.getItem("token");
-    if (!token) {
+    if (!token || token == null) {
       dispatch(authLogout());
     } else {
       const username = localStorage.getItem("username");
