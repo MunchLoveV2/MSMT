@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
+import history from "../../history";
 
 // puts the info of the user that is logged in into Redux
 export const authSuccess = (username, password, email, id) => {
@@ -77,7 +78,7 @@ export const auth = (username, password, email, userType, isSignup) => {
           );
 
           dispatch(authfetchUserPermissions(userId));
-          this.props.history.replace("/workorders/");
+          history.replace("/workorders/");
           //this block of code below sets up user permissions when an account is created
           // first checks if the user is registering
         } else {
