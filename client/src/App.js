@@ -9,6 +9,7 @@ import WorkOrderList from "./containers/WorkOrderList/WorkOrderList";
 import EditWorkOrder from "./containers/EditWorkOrder/EditWorkOrder";
 import WorkOrderSuccess from "./containers/WorkOrderSuccess/WorkOrderSuccess";
 import * as actions from "./store/actions/index";
+import SideBar from "./components/SideBar/SideBar.js";
 
 class App extends Component {
   componentDidMount() {
@@ -22,6 +23,7 @@ class App extends Component {
 
     return (
       <div>
+        <SideBar />
         <Layout>
           <Route path="/" exact component={Auth} />
           <Route path="/guest" exact component={Guest} />
