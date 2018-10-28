@@ -53,9 +53,9 @@ export const auth = (username, password, email, userType, isSignup) => {
 
     axios
       .post(url, authData)
+
       .then(response => {
         //puts user information into local storage after authentication
-        debugger;
         if (url === "/login") {
           localStorage.setItem("token", response.data.password);
           localStorage.setItem("username", response.data.username);
@@ -76,31 +76,31 @@ export const auth = (username, password, email, userType, isSignup) => {
           );
 
           dispatch(authfetchUserPermissions(userId));
-
+          console.log(url);
           //this block of code below sets up user permissions when an account is created
           // first checks if the user is registering
-          if (url === "/signup") {
-            //grabs the userID of the authenticated user
-            let userPermissionsData = {
-              UserinfoId: response.data.id
-            };
-
-            //grabs the userType (admin, supervisor, user, etc)
-            const userType = response.data.userType;
-
-            //looks in the UserTypes table to grab the specific permissions based on the userType
-            axios.get("/api/usertypes/" + userType).then(response => {
-              //once we have the permissions, we add it to the userPermissionsData object above
-              userPermissionsData.PermissionId =
-                response.data.defaultPermissions;
-              console.log(response.data);
-              //and then we post it to the userPermissions table
-              axios.post("/api/userpermissions", userPermissionsData);
-            });
-          }
         } else {
           //response.data.message is given to us from passport
           dispatch(authFail(response.data.message));
+        }
+
+        if (url === "/signup") {
+          //grabs the userID of the authenticated user
+          let userPermissionsData = {
+            UserinfoId: response.data.id
+          };
+
+          //grabs the userType (admin, supervisor, user, etc)
+          const userType = response.data.userType;
+
+          //looks in the UserTypes table to grab the specific permissions based on the userType
+          axios.get("/api/usertypes/" + userType).then(response => {
+            //once we have the permissions, we add it to the userPermissionsData object above
+            userPermissionsData.PermissionId = response.data.defaultPermissions;
+            console.log(response.data);
+            //and then we post it to the userPermissions table
+            axios.post("/api/userpermissions", userPermissionsData);
+          });
         }
       })
       .catch(err => {
