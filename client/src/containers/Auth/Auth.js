@@ -27,10 +27,6 @@ class Auth extends Component {
       userType,
       this.state.isSignup
     );
-
-    if (!this.state.isSignup) {
-      this.props.history.replace("/workorders/");
-    }
   };
 
   //uses Redux to log out the employee (if logged in)
