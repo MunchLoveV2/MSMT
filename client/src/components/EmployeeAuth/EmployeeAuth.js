@@ -5,6 +5,41 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import "react-widgets/dist/css/react-widgets.css";
 import Aux from "../../hoc/Aux";
 
+const renderDropdownList = ({ input, data, valueField, textField, label }) => (
+  <div>
+    <label>{label}</label>
+    <div>
+      <DropdownList
+        {...input}
+        data={data}
+        valueField={valueField}
+        textField={textField}
+        onChange={input.onChange}
+      />
+      {/*         {touched &&
+      ((error && <span>{error}</span>) ||
+        (warning && <span>{warning}</span>))} */}
+    </div>
+  </div>
+);
+
+const renderField = ({
+  input,
+  label,
+  type,
+  meta: { touched, error, warning }
+}) => (
+  <div>
+    <label>{label}</label>
+    <div>
+      <input {...input} type={type} />
+      {touched &&
+        ((error && <span>{error}</span>) ||
+          (warning && <span>{warning}</span>))}
+    </div>
+  </div>
+);
+
 let EmployeeAuth = props => {
   // block of text below is logic for rendering the CREATE USER button
   // depending on the permissions of the user that is logged in
@@ -14,7 +49,9 @@ let EmployeeAuth = props => {
     props.userPermissions.forEach(permission => {
       if (permission.Permission.permission === "CREATE-USERS") {
         createUsersButton = (
-          <Button onClick={props.switchAuthModeHandler}>CREATE USER</Button>
+          <Button onClick={props.switchAuthModeHandler}>
+            {!props.isSignup ? "CREATE USER" : "BACK TO LOGIN"}
+          </Button>
         );
       }
     });
@@ -31,15 +68,9 @@ let EmployeeAuth = props => {
 
   // provided by the documentation from Redux Form (using react-widgets)
   // https://redux-form.com/7.4.2/examples/react-widgets/
-  const renderDropdownList = ({ input, data, valueField, textField }) => (
-    <DropdownList
-      {...input}
-      data={data}
-      valueField={valueField}
-      textField={textField}
-      onChange={input.onChange}
-    />
-  );
+
+  const required = value =>
+    value || typeof value === "number" ? undefined : "Required";
 
   return (
     <Aux>
@@ -50,33 +81,40 @@ let EmployeeAuth = props => {
             is executed after the form is submitted by Redux Form */}
 
       <form onSubmit={handleSubmit(props.employeeAuthClick)}>
-        <div>
-          <label htmlFor="username">User Name</label>
-          <Field name="username" component="input" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <Field name="password" component="input" type="text" />
-        </div>
+        <Field
+          name="username"
+          type="text"
+          component={renderField}
+          label="Username"
+          validate={[required]}
+        />
+
+        <Field
+          name="password"
+          component={renderField}
+          label="Password"
+          type="text"
+        />
 
         {/* Below fields only show up when the user is signing up 
              (when the CREATE USER button is clicked)    */}
         {props.isSignup ? (
           <Aux>
-            <div>
-              <label htmlFor="email">Email</label>
-              <Field name="email" component="input" type="text" />
-            </div>
-            <div>
-              <label htmlFor="userType">User Type</label>
-              <Field
-                name="userType"
-                component={renderDropdownList}
-                data={users}
-                valueField="value"
-                textField="user"
-              />
-            </div>
+            <Field
+              name="email"
+              component={renderField}
+              label="Email"
+              type="text"
+            />
+
+            <Field
+              name="userType"
+              component={renderDropdownList}
+              data={users}
+              valueField="value"
+              label="User Type"
+              textField="user"
+            />
           </Aux>
         ) : null}
 
