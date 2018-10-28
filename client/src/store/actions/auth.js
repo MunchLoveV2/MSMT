@@ -55,7 +55,7 @@ export const auth = (username, password, email, userType, isSignup) => {
       .post(url, authData)
       .then(response => {
         //puts user information into local storage after authentication
-
+        debugger;
         if (url === "/login") {
           localStorage.setItem("token", response.data.password);
           localStorage.setItem("username", response.data.username);
