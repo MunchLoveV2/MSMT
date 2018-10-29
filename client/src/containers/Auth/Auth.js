@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Aux from "../../hoc/Aux";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
+import { reset } from "redux-form";
 import { withRouter } from "react-router-dom";
 import EmployeeAuth from "../../components/EmployeeAuth/EmployeeAuth";
 
@@ -27,6 +28,9 @@ class Auth extends Component {
       userType,
       this.state.isSignup
     );
+
+    alert("success");
+    this.props.resetEmployeeAuth();
   };
 
   //uses Redux to log out the employee (if logged in)
@@ -81,6 +85,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    resetEmployeeAuth: () => dispatch(reset("EmployeeAuth")),
     onAuth: (username, password, email, userType, isSignup) =>
       dispatch(actions.auth(username, password, email, userType, isSignup)),
     logOut: () => dispatch(actions.authLogout())

@@ -5,7 +5,14 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import "react-widgets/dist/css/react-widgets.css";
 import Aux from "../../hoc/Aux";
 
-const renderDropdownList = ({ input, data, valueField, textField, label }) => (
+const renderDropdownList = ({
+  input,
+  data,
+  valueField,
+  textField,
+  label,
+  meta: { touched, error, warning }
+}) => (
   <div>
     <label>{label}</label>
     <div>
@@ -16,9 +23,9 @@ const renderDropdownList = ({ input, data, valueField, textField, label }) => (
         textField={textField}
         onChange={input.onChange}
       />
-      {/*         {touched &&
-      ((error && <span>{error}</span>) ||
-        (warning && <span>{warning}</span>))} */}
+      {touched &&
+        ((error && <span>{error}</span>) ||
+          (warning && <span>{warning}</span>))}
     </div>
   </div>
 );
@@ -116,6 +123,7 @@ let EmployeeAuth = props => {
               valueField="value"
               label="User Type"
               textField="user"
+              validate={[required]}
             />
           </Aux>
         ) : null}
