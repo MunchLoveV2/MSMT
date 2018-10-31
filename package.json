@@ -58,6 +58,7 @@
     "react-s3-uploader": "^4.8.0",
     "react-select": "^2.1.0",
     "react-sidebar": "^3.0.2",
+    "react-switch": "^3.0.4",
     "react-widgets": "^4.4.6",
     "reactstrap": "^6.5.0",
     "redux": "^4.0.0",

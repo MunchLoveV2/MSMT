@@ -1,5 +1,4 @@
 module.exports = function(sequelize, DataTypes) {
-  
   //userinfo data structure
   var Userinfo = sequelize.define("Userinfo", {
     id: {
@@ -22,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
         len: [1, 100]
       }
     },
-    email: {
+    phoneNumber: {
       type: DataTypes.STRING,
       required: true,
       len: [1, 100]
@@ -40,10 +39,8 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: "active"
     }
   });
-  
 
   Userinfo.associate = function(models) {
-
     Userinfo.hasMany(models.Workorders, {
       onDelete: "cascade"
     });
@@ -51,10 +48,6 @@ module.exports = function(sequelize, DataTypes) {
     Userinfo.hasMany(models.userPermissions, {
       onDelete: "cascade"
     });
-
-
   };
   return Userinfo;
 };
-
-

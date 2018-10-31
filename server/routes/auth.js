@@ -105,7 +105,7 @@ module.exports = function(app, passport) {
       userInfo = {
         username: user.username,
         password: user.password,
-        email: user.email,
+        phoneNumber: user.phoneNumber,
         userType: user.userType,
         message: info,
         id: user.id
@@ -121,7 +121,7 @@ module.exports = function(app, passport) {
       userInfo = {
         username: user.username,
         password: user.password,
-        email: user.email,
+        phoneNumber: user.phoneNumber,
         message: info,
         id: user.id
       };

@@ -5,7 +5,7 @@ const initialState = {
   username: null,
   userId: null,
   password: null,
-  email: null,
+  phoneNumber: null,
   userType: null,
   userPermissions: null
 };
@@ -19,7 +19,7 @@ const authSuccess = (state, action) => {
     username: action.username,
     password: action.password,
     userId: action.userId,
-    email: action.email,
+    phoneNumber: action.phoneNumber,
     userType: action.userType,
     error: null
   });

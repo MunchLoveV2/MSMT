@@ -3,12 +3,14 @@ import Aux from "../../hoc/Aux";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import WorkOrderTable from "../../components/WorkOrderTable/WorkOrderTable";
+import AlertToggle from "../../components/AlertToggle/AlertToggle";
 import { withRouter } from "react-router-dom";
 import Select from "react-select";
 import axios from "axios";
 
 class WorkOrderList extends Component {
   state = {
+    isAlert: true,
     selectedUser: null,
     selectedWorkOrder: null,
     users: null,
@@ -44,6 +46,10 @@ class WorkOrderList extends Component {
   // gets the user that is selected (via Select) and sets state (selectedUser)
   handleUserSelect = selectedUser => {
     this.setState({ selectedUser });
+  };
+
+  handleIsAlert = isAlert => {
+    this.setState({ isAlert });
   };
 
   // we use this function to get the information (in SQL) of the work order that is selected
@@ -93,6 +99,7 @@ class WorkOrderList extends Component {
       // props.assignWorkOrders is used to either POST or PUT to workOrderAssignments SQL table
       // see store => workOrders
       this.props.assignWorkOrders(workOrderAssignmentData);
+      this.setState({ selectedUser: null });
     }
   };
 
@@ -100,7 +107,7 @@ class WorkOrderList extends Component {
     let workOrdersTable;
     let usersSelect;
     let workOrdersData = [];
-    let testImage;
+    let alertToggle;
 
     //data needs to be loaded before anything can be rendered onto the page
     if (!this.props.workOrders[0] || !this.state.users) {
@@ -155,11 +162,20 @@ class WorkOrderList extends Component {
       );
     }
 
+    if (this.state.selectedUser) {
+      alertToggle = (
+        <AlertToggle
+          handleIsAlert={this.handleIsAlert}
+          isAlert={this.state.isAlert}
+        />
+      );
+    }
+
     return (
       <Aux>
         {workOrdersTable}
         {usersSelect}
-        {testImage}
+        {alertToggle}
       </Aux>
     );
   }

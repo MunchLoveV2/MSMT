@@ -24,7 +24,7 @@ class Auth extends Component {
     this.props.onAuth(
       values.username,
       values.password,
-      values.email,
+      values.phoneNumber,
       userType,
       this.state.isSignup
     );
@@ -78,8 +78,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     resetEmployeeAuth: () => dispatch(reset("EmployeeAuth")),
-    onAuth: (username, password, email, userType, isSignup) =>
-      dispatch(actions.auth(username, password, email, userType, isSignup))
+    onAuth: (username, password, phoneNumber, userType, isSignup) =>
+      dispatch(
+        actions.auth(username, password, phoneNumber, userType, isSignup)
+      )
   };
 };
 

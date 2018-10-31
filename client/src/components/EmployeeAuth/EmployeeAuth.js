@@ -109,9 +109,9 @@ let EmployeeAuth = props => {
         {props.isSignup ? (
           <Aux>
             <Field
-              name="email"
+              name="phoneNumber"
               component={renderField}
-              label="Email"
+              label="Phone Number"
               type="text"
               validate={[required]}
             />
