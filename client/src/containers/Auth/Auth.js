@@ -33,13 +33,6 @@ class Auth extends Component {
     this.props.resetEmployeeAuth();
   };
 
-  //uses Redux to log out the employee (if logged in)
-  authLogout = () => {
-    if (this.props.username) {
-      this.props.logOut();
-    }
-  };
-
   //toggles whether the employee is signing up or logging in
   switchAuthModeHandler = () => {
     this.setState(prevState => {
@@ -64,7 +57,6 @@ class Auth extends Component {
           switchAuthModeHandler={this.switchAuthModeHandler}
           employeeAuthClick={this.employeeAuthClick}
           isAuth={this.props.isAuth}
-          authLogout={this.authLogout}
         />
         {errorMessage}
       </Aux>
@@ -87,8 +79,7 @@ const mapDispatchToProps = dispatch => {
   return {
     resetEmployeeAuth: () => dispatch(reset("EmployeeAuth")),
     onAuth: (username, password, email, userType, isSignup) =>
-      dispatch(actions.auth(username, password, email, userType, isSignup)),
-    logOut: () => dispatch(actions.authLogout())
+      dispatch(actions.auth(username, password, email, userType, isSignup))
   };
 };
 

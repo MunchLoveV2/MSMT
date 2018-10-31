@@ -13,22 +13,22 @@ const renderDropdownList = ({
   label,
   meta: { touched, error, warning }
 }) => (
+  <div>
+    <label>{label}</label>
     <div>
-      <label>{label}</label>
-      <div>
-        <DropdownList
-          {...input}
-          data={data}
-          valueField={valueField}
-          textField={textField}
-          onChange={input.onChange}
-        />
-        {touched &&
-          ((error && <span>{error}</span>) ||
-            (warning && <span>{warning}</span>))}
-      </div>
+      <DropdownList
+        {...input}
+        data={data}
+        valueField={valueField}
+        textField={textField}
+        onChange={input.onChange}
+      />
+      {touched &&
+        ((error && <span>{error}</span>) ||
+          (warning && <span>{warning}</span>))}
     </div>
-  );
+  </div>
+);
 
 const renderField = ({
   input,
@@ -36,16 +36,16 @@ const renderField = ({
   type,
   meta: { touched, error, warning }
 }) => (
+  <div>
+    <label>{label}</label>
     <div>
-      <label>{label}</label>
-      <div>
-        <input {...input} type={type} />
-        {touched &&
-          ((error && <span>{error}</span>) ||
-            (warning && <span>{warning}</span>))}
-      </div>
+      <input {...input} type={type} />
+      {touched &&
+        ((error && <span>{error}</span>) ||
+          (warning && <span>{warning}</span>))}
     </div>
-  );
+  </div>
+);
 
 let EmployeeAuth = props => {
   // block of text below is logic for rendering the CREATE USER button
@@ -132,11 +132,6 @@ let EmployeeAuth = props => {
           {props.isSignup ? "CREATE USER" : "LOGIN"}
         </button>
       </form>
-
-      {/* logout button only shows up if user is in local storage */}
-      {props.isAuth ? (
-        <Button onClick={props.authLogout}> Logout </Button>
-      ) : null}
 
       {/* CREATE USER button */}
       {createUsersButton}

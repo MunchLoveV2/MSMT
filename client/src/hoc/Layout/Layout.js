@@ -3,11 +3,9 @@ import Aux from "../Aux";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import { withRouter } from "react-router-dom";
-import NavBar from "../../components/SideBar/NavBar.js";
-
+import NavBar from "../../components/NavBar/NavBar.js";
 
 class Layout extends Component {
-
   authLogout = () => {
     if (this.props.username) {
       this.props.logOut();
@@ -21,15 +19,10 @@ class Layout extends Component {
     });
   };
 
-
-
   render() {
     return (
       <div>
-        <NavBar
-          isAuth={this.props.isAuth}
-          authLogout={this.authLogout}
-        />
+        <NavBar isAuth={this.props.isAuth} authLogout={this.authLogout} />
 
         <Aux>
           <main>{this.props.children}</main>
