@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import MaterialTitlePanel from "./TitlePanel";
+import { Link } from "react-router-dom";
 
 const styles = {
   sidebar: {
@@ -35,15 +36,17 @@ const SidebarContent = props => {
   return (
     <MaterialTitlePanel title="Menu" style={style}>
       <div style={styles.content}>
-        <a href="/" style={styles.sidebarLink}>
-          Profile
-        </a>
-        <a href="/" style={styles.sidebarLink}>
-          Dashboard
-        </a>
-        <a href="/" style={styles.sidebarLink}>
-          Inbox
-        </a>
+        <ul>
+          <li style={styles.sidebarLink}>
+            <Link to="/">Home</Link>
+          </li>
+          <li style={styles.sidebarLink}>
+            <Link to="/create">Create Work Order</Link>
+          </li>
+          <li style={styles.sidebarLink}>
+            <Link to="/chat">Live Chat</Link>
+          </li>
+        </ul>
         <div style={styles.divider} />
         {links}
       </div>

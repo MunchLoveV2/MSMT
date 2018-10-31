@@ -7,7 +7,7 @@ class Layout extends Component {
   render() {
     return (
       <Aux>
-        <main>{this.props.children}</main>
+        <div>{this.props.children}</div>
       </Aux>
     );
   }
