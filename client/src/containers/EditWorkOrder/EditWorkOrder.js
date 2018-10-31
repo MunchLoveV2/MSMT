@@ -20,13 +20,16 @@ class EditWorkOrder extends Component {
     // this.props.currentWorkOrder gives us access to the specific work order's information
 
     let title;
+    let image;
 
     if (this.props.currentWorkOrder) {
       title = this.props.currentWorkOrder.title;
+      image = <img src={this.props.currentWorkOrder.pictureDataUri} />;
     }
     return (
       <Aux>
         <h1> Issue: {title}</h1>
+        {image}
         <button onClick={this.handleWorkOrderCompleted}>Completed</button>
       </Aux>
     );

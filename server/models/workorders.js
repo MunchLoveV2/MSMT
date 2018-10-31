@@ -3,7 +3,15 @@ module.exports = function(sequelize, DataTypes) {
     title: DataTypes.TEXT,
     category: DataTypes.TEXT,
     location: DataTypes.TEXT,
-    status: DataTypes.TEXT
+    status: DataTypes.TEXT,
+    pictureDataUri: {
+      type: DataTypes.BLOB("long"),
+      get() {
+        if (this.getDataValue("pictureDataUri")) {
+          return this.getDataValue("pictureDataUri").toString("utf8");
+        }
+      }
+    }
   });
 
   Workorders.associate = function(models) {
