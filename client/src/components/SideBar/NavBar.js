@@ -38,11 +38,11 @@ let NavBar = props => {
                         <NavLink>Profile</NavLink>
                     </NavItem>
                     <NavItem>
-                        <Link to='/'>
-                            {props.isAuth ? (
-                                <Button onClick={props.authLogout}> Logout </Button>
-                            ) : null}
-                        </Link>
+                        {props.isAuth ? (
+                            <Link to='/' onClick={props.authLogout}>
+                                <NavLink>Logout</NavLink>
+                            </Link>
+                        ) : null}
                     </NavItem>
                     <UncontrolledDropdown nav inNavbar>
                         <DropdownToggle nav caret>
