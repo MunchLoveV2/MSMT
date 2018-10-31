@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import WorkOrderTable from "../../components/WorkOrderTable/WorkOrderTable";
 import { withRouter } from "react-router-dom";
-
 import Select from "react-select";
 import axios from "axios";
 
@@ -101,9 +100,10 @@ class WorkOrderList extends Component {
     let workOrdersTable;
     let usersSelect;
     let workOrdersData = [];
+    let testImage;
 
     //data needs to be loaded before anything can be rendered onto the page
-    if (!this.props.workOrders || !this.state.users) {
+    if (!this.props.workOrders[0] || !this.state.users) {
       workOrdersTable = <h1> loading </h1>;
     } else {
       //once data is stored in the redux store.... via props.renderWorkOrders, we can access it, and iterate over it
@@ -114,7 +114,8 @@ class WorkOrderList extends Component {
           status: workOrder.status,
           category: workOrder.category,
           location: workOrder.location,
-          dateCreated: workOrder.createdAt
+          dateCreated: workOrder.createdAt,
+          pictureDataUri: workOrder.pictureDataUri
         };
 
         // the workorder is either set as unassigned, or gets assigned user in SQL
@@ -158,6 +159,7 @@ class WorkOrderList extends Component {
       <Aux>
         {workOrdersTable}
         {usersSelect}
+        {testImage}
       </Aux>
     );
   }

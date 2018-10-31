@@ -27,10 +27,18 @@ export const handleWorkOrderCompleted = currentWorkOrderId => {
   let url = "/api/workorders/" + currentWorkOrderId;
   console.log(url);
   return dispatch => {
-    axios.put(url, updatedStatus).then(response => {
-      url = "/api/workorders/";
-      dispatch(renderWorkOrders(url));
-    });
+    console.log("progress");
+    console.log(url);
+    axios
+      .put(url, updatedStatus)
+      .then(response => {
+        url = "/api/workorders/";
+        console.log(response);
+        dispatch(renderWorkOrders(url));
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 };
 

@@ -55,6 +55,7 @@ module.exports = function(app, passport) {
   });
 
   app.put("/api/workorders/:id", function(req, res) {
+    console.log("got to the backend, at least");
     db.Workorders.update(
       { status: req.body.status },
       {
