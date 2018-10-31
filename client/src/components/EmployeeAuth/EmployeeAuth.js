@@ -133,11 +133,6 @@ let EmployeeAuth = props => {
         </button>
       </form>
 
-      {/* logout button only shows up if user is in local storage */}
-      {props.isAuth ? (
-        <Button onClick={props.authLogout}> Logout </Button>
-      ) : null}
-
       {/* CREATE USER button */}
       {createUsersButton}
     </Aux>
