@@ -20,7 +20,11 @@ let NavBar = props => {
         <NavbarBrand href="/">MSMT</NavbarBrand>
         <Nav className="ml-auto" navbar>
           <NavItem>
-            <NavLink>Profile</NavLink>
+            {props.isAuth ? (
+              <Link to="/chat">
+                <NavLink>Chat</NavLink>
+              </Link>
+            ) : null}
           </NavItem>
           <NavItem>
             {props.isAuth ? (
