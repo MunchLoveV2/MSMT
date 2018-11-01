@@ -9,6 +9,7 @@ import WorkOrderList from "./containers/WorkOrderList/WorkOrderList";
 import EditWorkOrder from "./containers/EditWorkOrder/EditWorkOrder";
 import WorkOrderSuccess from "./containers/WorkOrderSuccess/WorkOrderSuccess";
 import * as actions from "./store/actions/index";
+import ChatPlatform from "./components/ChatPlatform/ChatPlatform.js";
 
 class App extends Component {
   componentDidMount() {
@@ -29,6 +30,7 @@ class App extends Component {
           <Route path="/workorders" exact component={WorkOrderList} />
           <Route path="/success" exact component={WorkOrderSuccess} />
           <Route path="/edit" exact component={EditWorkOrder} />
+          <Route path="/chat" exact component={ChatPlatform} />
         </Layout>
       </div>
     );

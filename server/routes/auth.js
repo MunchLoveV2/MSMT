@@ -1,7 +1,6 @@
 var db = require("../models");
 
 module.exports = function(app, passport) {
-  // This links to the front page
   app.put("/api/workorderassignments", function(req, res) {
     const workOrderAssignments = req.body;
 
