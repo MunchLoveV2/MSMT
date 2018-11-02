@@ -33,13 +33,28 @@ let NavBar = props => {
               </Link>
             ) : null}
           </NavItem>
+          <NavItem>
+            {props.userType === "ADMIN" ? (
+              <Link to="signup">
+                <NavLink>Create User</NavLink>
+              </Link>
+            ) : null}
+          </NavItem>
           <UncontrolledDropdown nav inNavbar>
             <DropdownToggle nav caret>
-              Options
+              Work Orders
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem>Option 1</DropdownItem>
-              <DropdownItem>Option 2</DropdownItem>
+              <DropdownItem>
+                {props.isAuth ? (
+                  <Link to="/create">Create Work Order</Link>
+                ) : null}
+              </DropdownItem>
+              <DropdownItem>
+                {props.userType === "ADMIN" ? (
+                  <Link to="/workorders">See All Work Orders</Link>
+                ) : null}
+              </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>

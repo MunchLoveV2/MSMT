@@ -22,7 +22,11 @@ class Layout extends Component {
   render() {
     return (
       <div>
-        <NavBar isAuth={this.props.isAuth} authLogout={this.authLogout} />
+        <NavBar
+          isAuth={this.props.isAuth}
+          authLogout={this.authLogout}
+          userType={this.props.userType}
+        />
 
         <Aux>
           <main>{this.props.children}</main>
@@ -38,7 +42,7 @@ const mapStateToProps = state => {
     isAuth: state.auth.password !== null,
     error: state.auth.error,
     userPermissions: state.auth.userPermissions,
-    userTypes: state.auth.userTypes,
+    userType: state.auth.userType,
     userId: state.auth.userId
   };
 };
