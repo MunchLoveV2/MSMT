@@ -10,8 +10,6 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
-import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
 
 let NavBar = props => {
   return (
@@ -28,9 +26,9 @@ let NavBar = props => {
           </NavItem>
           <NavItem>
             {props.isAuth ? (
-              <Link to="/" onClick={props.authLogout}>
-                <NavLink>Logout</NavLink>
-              </Link>
+              <NavLink href="/" onClick={props.authLogout}>
+                Logout
+              </NavLink>
             ) : null}
           </NavItem>
           <NavItem>

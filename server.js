@@ -14,7 +14,10 @@ var expressWs = require("express-ws")(app); // Websocket
 
 // Middleware
 app.use(cookieParser());
-app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({ limit: "100000mb" }));
+
 
 // passport password auth stuff
 app.use(

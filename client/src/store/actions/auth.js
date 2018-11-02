@@ -3,17 +3,17 @@ import * as actionTypes from "./actionTypes";
 import history from "../../history";
 
 // puts the info of the user that is logged in into Redux
-export const authSuccess = (username, password, email, id) => {
+export const authSuccess = (username, password, phoneNumber, id) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     username: username,
     password: password,
-    email: email,
+    phoneNumber: phoneNumber,
     userId: id
   };
 };
 
-export const authLogout = (username, password, email) => {
+export const authLogout = (username, password, phoneNumber) => {
   //removes data from the local storage
   localStorage.removeItem("token");
   localStorage.removeItem("username");
@@ -23,7 +23,7 @@ export const authLogout = (username, password, email) => {
     type: actionTypes.AUTH_LOGOUT,
     username: username,
     password: password,
-    email: email
+    phoneNumber: phoneNumber
   };
 };
 
@@ -36,13 +36,13 @@ export const authFail = error => {
 };
 
 // **WARNING - incoming long lines of code~~~~~!!!~!~!~!~!~
-export const auth = (username, password, email, userType, isSignup) => {
+export const auth = (username, password, phoneNumber, userType, isSignup) => {
   let userId;
   return dispatch => {
     const authData = {
       username: username,
       password: password,
-      email: email,
+      phoneNumber: phoneNumber,
       userType: userType
     };
 
@@ -71,7 +71,7 @@ export const auth = (username, password, email, userType, isSignup) => {
             authSuccess(
               response.data.username,
               response.data.password,
-              response.data.email,
+              response.data.phoneNumber,
               userId,
               response.data.userType
             )
