@@ -70,7 +70,7 @@ const mapStateToProps = state => {
     isAuth: state.auth.password !== null,
     error: state.auth.error,
     userPermissions: state.auth.userPermissions,
-    userTypes: state.auth.userTypes,
+    userType: state.auth.userType,
     userId: state.auth.userId
   };
 };
