@@ -9,6 +9,7 @@ var app = express();
 var PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: "100000mb" }));
 
 // passport password auth stuff
