@@ -33,6 +33,13 @@ let NavBar = props => {
               </Link>
             ) : null}
           </NavItem>
+          <NavItem>
+            {props.userType === "ADMIN" ? (
+              <Link to="signup">
+                <NavLink>Create User</NavLink>
+              </Link>
+            ) : null}
+          </NavItem>
           <UncontrolledDropdown nav inNavbar>
             <DropdownToggle nav caret>
               Options
