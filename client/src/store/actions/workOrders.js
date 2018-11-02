@@ -98,18 +98,34 @@ export const assignWorkOrders = workOrderAssignmentData => {
           if (request.type === "PUT") {
             axios.put(url, request.data).then(response => {
               console.log(response.data);
-              let workOrderId = response.data.id;
-              dispatch(updateWorkOrderStatus(workOrderId));
+              dispatch(
+                sendWorkOrder(
+                  response.data.Userinfo.phoneNumber,
+                  response.data.Userinfo.username,
+                  response.data.Workorder.location
+                )
+              );
+              dispatch(updateWorkOrderStatus(response.data.WorkorderId));
             });
           } else {
             // if the request type is a POST, then we POST
             axios.post(url, request.data).then(response => {
-              let workOrderId = response.data.WorkorderId;
+              console.log(response.data);
+              console.log(
+                response.data.Userinfo.phoneNumber,
+                response.data.Userinfo.username
+              );
+              dispatch(
+                sendWorkOrder(
+                  response.data.Userinfo.phoneNumber,
+                  response.data.Userinfo.username,
+                  response.data.Workorder.location
+                )
+              );
 
               // in addition, if this is a newly posted work assignment, we need to set
               // the work order's status from pending => assigned
-
-              dispatch(updateWorkOrderStatus(workOrderId));
+              dispatch(updateWorkOrderStatus(response.data.WorkorderId));
             });
           }
         });
@@ -129,6 +145,24 @@ export const renderWorkOrders = query => {
       .then(response => {
         console.log(response.data);
         dispatch(getWorkOrders(response.data));
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+};
+
+export const sendWorkOrder = (phoneNumber, username, location) => {
+  const url = "/api/twilio";
+  return dispatch => {
+    axios
+      .post(url, {
+        phoneNumber: phoneNumber,
+        username: username,
+        location: location
+      })
+      .then(response => {
+        console.log(response.data);
       })
       .catch(error => {
         console.log(error);

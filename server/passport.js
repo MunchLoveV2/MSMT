@@ -1,8 +1,8 @@
 require("dotenv").config();
 const bCrypt = require("bcrypt");
 module.exports = function(passport, userinfo) {
-const Userinfo = userinfo;
-const LocalStrategy = require("passport-local").Strategy;
+  const Userinfo = userinfo;
+  const LocalStrategy = require("passport-local").Strategy;
 
   passport.use(
     "local-signup",
@@ -10,7 +10,7 @@ const LocalStrategy = require("passport-local").Strategy;
       {
         usernameField: "username",
         passwordField: "password",
-        email: "email",
+        phoneNumber: "phoneNumber",
         passReqToCallback: true // allows us to pass back the entire request to the callback
       },
       function(req, username, password, done) {
@@ -23,7 +23,7 @@ const LocalStrategy = require("passport-local").Strategy;
           }
         }).then(function(user) {
           if (user) {
-            console.log("didn't work")
+            console.log("didn't work");
             return done(null, false, {
               message: "That username is already taken"
             });
@@ -32,7 +32,7 @@ const LocalStrategy = require("passport-local").Strategy;
             const data = {
               username: username,
               password: userPassword,
-              email: req.body.email,
+              phoneNumber: req.body.phoneNumber,
               userType: req.body.userType
             };
             Userinfo.create(data).then(function(user) {
@@ -50,7 +50,7 @@ const LocalStrategy = require("passport-local").Strategy;
   );
 
   passport.serializeUser(function(user, done) {
-    console.log("serialize" + user.id)
+    console.log("serialize" + user.id);
     done(null, user.id);
   });
 
@@ -60,7 +60,7 @@ const LocalStrategy = require("passport-local").Strategy;
         id: id
       }
     }).then(function(user) {
-      console.log("deserialize" + user.id)
+      console.log("deserialize" + user.id);
       if (user) {
         done(null, user.get());
       } else {
