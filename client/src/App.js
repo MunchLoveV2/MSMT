@@ -11,6 +11,7 @@ import WorkOrderSuccess from "./containers/WorkOrderSuccess/WorkOrderSuccess";
 import * as actions from "./store/actions/index";
 import ChatPlatform from "./components/ChatPlatform/ChatPlatform.js";
 import CreateUser from "./components/CreateUser/CreateUser.js";
+import Dashboard from "./components/Dashboard/Dashboard.js";
 
 class App extends Component {
   componentDidMount() {
@@ -33,6 +34,7 @@ class App extends Component {
           <Route path="/edit" exact component={EditWorkOrder} />
           <Route path="/chat" exact component={ChatPlatform} />
           <Route path="/signup" exact component={CreateUser} />
+          <Route path="/dashboard" exact component={Dashboard} />
         </Layout>
       </div>
     );

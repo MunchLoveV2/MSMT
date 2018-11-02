@@ -10,7 +10,6 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
-import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 let NavBar = props => {
@@ -21,15 +20,15 @@ let NavBar = props => {
         <Nav className="ml-auto" navbar>
           <NavItem>
             {props.isAuth ? (
-              <Link to="/chat">
-                <NavLink>Chat</NavLink>
+              <Link to="/dashboard">
+                <NavLink>Dashboard</NavLink>
               </Link>
             ) : null}
           </NavItem>
           <NavItem>
             {props.isAuth ? (
-              <Link to="/" onClick={props.authLogout}>
-                <NavLink>Logout</NavLink>
+              <Link to="/chat">
+                <NavLink>Chat</NavLink>
               </Link>
             ) : null}
           </NavItem>
@@ -57,6 +56,13 @@ let NavBar = props => {
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
+          <NavItem>
+            {props.isAuth ? (
+              <Link to="/" onClick={props.authLogout}>
+                <NavLink>Logout</NavLink>
+              </Link>
+            ) : null}
+          </NavItem>
         </Nav>
       </Navbar>
     </div>
