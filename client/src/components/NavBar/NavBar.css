@@ -1,0 +1,14 @@
+nav.navbar,
+.navbar-brand {
+  background: rgba(212, 55, 55, 0.9) !important;
+  padding-bottom: 0px;
+  margin-top: 0px;
+  font-size: 30pt;
+  font-weight: bold;
+  color: white !important;
+  font-family: "Monoton", cursive;
+}
+
+div.nav.a.navbar-brand {
+  font-size: 300pt;
+}

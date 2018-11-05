@@ -1,0 +1,35 @@
+.progress-bar {
+  position: relative;
+  height: 30px;
+  width: 600px;
+  border-radius: 50px;
+  border: 1px solid rgb(240, 202, 202);
+  background-color: rgba(75, 7, 7, 0.815) !important;
+  border: 1px solid #f0dada;
+  border-bottom: 3px solid rgb(80, 3, 3);
+  outline: rgb(233, 221, 221);
+  text-align: center !important;
+  margin: 0 auto;
+}
+.filler {
+  background: rgb(243, 188, 9);
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.2s ease-in;
+  background-image: linear-gradient(
+    to right,
+    rgb(245, 149, 149),
+    rgb(247, 9, 9)
+  );
+}
+/* this is the style of the submit button; use this later */
+button {
+  margin-right: 10px;
+  padding: 7px 12px;
+  font-size: 14px;
+  background: #d14836;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  cursor: pointer;
+  outline: 0;
+}
