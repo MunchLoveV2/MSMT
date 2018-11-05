@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Aux from "../../hoc/Aux";
+import Auxil from "../../hoc/Auxil";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import * as actions from "../../store/actions/index";
@@ -27,11 +27,11 @@ class EditWorkOrder extends Component {
       image = <img src={this.props.currentWorkOrder.pictureDataUri} />;
     }
     return (
-      <Aux>
+      <Auxil>
         <h1> Issue: {title}</h1>
         {image}
         <button onClick={this.handleWorkOrderCompleted}>Completed</button>
-      </Aux>
+      </Auxil>
     );
   }
 }

@@ -1,11 +1,11 @@
 import React from "react";
 import { reduxForm, Field } from "redux-form";
-import Aux from "../../hoc/Aux";
+import Auxil from "../../hoc/Auxil";
 
 let WorkOrderForm = props => {
   const { handleSubmit } = props;
   return (
-    <Aux>
+    <Auxil>
       {/* handleSubmit is given to use by Redux Forms, it helps us 
             determine what happens after the form is submitted */}
 
@@ -25,7 +25,7 @@ let WorkOrderForm = props => {
 
         <button type="submit">Submit</button>
       </form>
-    </Aux>
+    </Auxil>
   );
 };
 
