@@ -103,6 +103,24 @@ class WorkOrderList extends Component {
     }
   };
 
+  workData = () => {
+    this.workOrdersData.map((item, i) => {
+      return (
+        <tr key={i}>
+          <td>{item.id}</td>
+          <td>{item.issue}</td>
+          <td>{item.status}</td>
+          <td>{item.category}</td>
+          <td>{item.location}</td>
+        </tr>
+      );
+    })
+  };
+
+
+
+
+
   render() {
     let workOrdersTable;
     let usersSelect;
@@ -133,14 +151,19 @@ class WorkOrderList extends Component {
         }
 
         workOrdersData.push(item);
+        console.log(workOrdersData);
+
+
       });
+
 
       workOrdersTable = (
         <WorkOrderTable
           // give the above workOrdersData to the workOrderTable component
           userId={this.props.userId}
           userPermissions={this.props.userPermissions}
-          workOrders={workOrdersData}
+          // workOrders={workOrdersData}
+          workData={this.workData}
           onChange={this.handleWorkOrderSelect}
           handleWorkOrderEdit={this.handleWorkOrderEdit}
           handleWorkOrderAssign={this.handleWorkOrderAssign}
