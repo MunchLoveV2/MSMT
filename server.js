@@ -2,6 +2,7 @@ const express = require("express");
 
 // Password auth stuffs
 var passport = require("passport");
+var path = require("path");
 var session = require("express-session");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
