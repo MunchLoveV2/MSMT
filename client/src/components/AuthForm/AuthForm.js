@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import { reduxForm, Field } from "redux-form";
 import DropdownList from "react-widgets/lib/DropdownList";
 import "react-widgets/dist/css/react-widgets.css";
@@ -47,22 +46,9 @@ const renderField = ({
   </div>
 );
 
-let EmployeeAuth = props => {
+let AuthForm = props => {
   // block of text below is logic for rendering the CREATE USER button
   // depending on the permissions of the user that is logged in
-  let createUsersButton;
-
-  if (props.userId && props.userPermissions) {
-    props.userPermissions.forEach(permission => {
-      if (permission.Permission.permission === "CREATE-USERS") {
-        createUsersButton = (
-          <Button onClick={props.switchAuthModeHandler}>
-            {!props.isSignup ? "CREATE USER" : "BACK TO LOGIN"}
-          </Button>
-        );
-      }
-    });
-  }
 
   const { handleSubmit, submitting } = props;
 
@@ -84,10 +70,7 @@ let EmployeeAuth = props => {
       {/* handleSubmit is given to use by Redux Form, it helps us 
             determine what happens after the form is submitted */}
 
-      {/* we pass in employeeAuthClick (see container Auth), which
-            is executed after the form is submitted by Redux Form */}
-
-      <form onSubmit={handleSubmit(props.employeeAuthClick)}>
+      <form onSubmit={handleSubmit(props.authClick)}>
         <Field
           name="username"
           type="text"
@@ -132,16 +115,13 @@ let EmployeeAuth = props => {
           {props.isSignup ? "CREATE USER" : "LOGIN"}
         </button>
       </form>
-
-      {/* CREATE USER button */}
-      {createUsersButton}
     </Aux>
   );
 };
 
-EmployeeAuth = reduxForm({
-  form: "EmployeeAuth",
+AuthForm = reduxForm({
+  form: "AuthForm",
   destroyOnUnmount: false
-})(EmployeeAuth);
+})(AuthForm);
 
-export default EmployeeAuth;
+export default AuthForm;

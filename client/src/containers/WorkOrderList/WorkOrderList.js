@@ -5,6 +5,7 @@ import * as actions from "../../store/actions/index";
 import WorkOrderTable from "../../components/WorkOrderTable/WorkOrderTable";
 import AlertToggle from "../../components/AlertToggle/AlertToggle";
 import { withRouter } from "react-router-dom";
+import moment from "moment";
 import Select from "react-select";
 import axios from "axios";
 
@@ -23,6 +24,10 @@ class WorkOrderList extends Component {
     //getWorkOrder puts work order data in the redux store
     const query = "/api/workorders";
     this.props.renderWorkOrders(query);
+    this.interval = setInterval(() => {
+      this.props.renderWorkOrders(query);
+      //this.props.renderWorkOrders(query);
+    }, 60000);
 
     //the below axios get request hits the "api/users" route
     //gets data on all the users puts data in the local state
@@ -41,6 +46,10 @@ class WorkOrderList extends Component {
       .catch(error => {
         throw error;
       });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   // gets the user that is selected (via Select) and sets state (selectedUser)
@@ -98,7 +107,7 @@ class WorkOrderList extends Component {
 
       // props.assignWorkOrders is used to either POST or PUT to workOrderAssignments SQL table
       // see store => workOrders
-      this.props.assignWorkOrders(workOrderAssignmentData);
+      this.props.assignWorkOrders(workOrderAssignmentData, this.state.isAlert);
       this.setState({ selectedUser: null });
     }
   };
@@ -115,6 +124,10 @@ class WorkOrderList extends Component {
     } else {
       //once data is stored in the redux store.... via props.renderWorkOrders, we can access it, and iterate over it
       this.props.workOrders.forEach(workOrder => {
+        let createdFromNow = moment().diff(workOrder.createdAt, "minutes");
+        createdFromNow =
+          moment.duration(createdFromNow, "minutes").humanize() + " ago";
+
         let item = {
           id: workOrder.id,
           issue: workOrder.title,
@@ -122,7 +135,8 @@ class WorkOrderList extends Component {
           category: workOrder.category,
           location: workOrder.location,
           dateCreated: workOrder.createdAt,
-          pictureDataUri: workOrder.pictureDataUri
+          pictureDataUri: workOrder.pictureDataUri,
+          createdFromNow: createdFromNow
         };
 
         // the workorder is either set as unassigned, or gets assigned user in SQL
@@ -193,8 +207,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     renderWorkOrders: query => dispatch(actions.renderWorkOrders(query)),
-    assignWorkOrders: updatedWorkOrders =>
-      dispatch(actions.assignWorkOrders(updatedWorkOrders)),
+    assignWorkOrders: (updatedWorkOrders, isAlert) =>
+      dispatch(actions.assignWorkOrders(updatedWorkOrders, isAlert)),
     getCurrentWorkOrder: currentWorkOrder =>
       dispatch(actions.getCurrentWorkOrder(currentWorkOrder))
   };

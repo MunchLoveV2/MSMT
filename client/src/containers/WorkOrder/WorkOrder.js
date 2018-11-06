@@ -21,17 +21,22 @@ class WorkOrder extends Component {
 
   workOrderSubmit = value => {
     let dataUri = this.state.dataUri;
-    //let arrayBuffer = decode(dataUri);
-    //console.log(arrayBuffer);
-
-    // test above
+    let urgent = false;
+    let remind = false;
     const url = "/api/workorders";
+
+    if (value.urgent) {
+      urgent = true;
+      remind = true;
+    }
 
     const workOrderData = {
       title: value.title,
       category: value.category,
       location: value.location,
       pictureDataUri: dataUri,
+      urgent: urgent,
+      remind: remind,
       status: "pending"
     };
 
@@ -42,7 +47,6 @@ class WorkOrder extends Component {
     }
 
     workOrderData.UserinfoId = userID;
-    console.log(workOrderData);
 
     axios(url, {
       method: "POST",

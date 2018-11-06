@@ -4,41 +4,25 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import { reset } from "redux-form";
 import { withRouter } from "react-router-dom";
-import EmployeeAuth from "../../components/EmployeeAuth/EmployeeAuth";
+import AuthForm from "../../components/AuthForm/AuthForm";
 
 class Auth extends Component {
   // this state gets toggled when the CREATE USER button clicked
-  // (see component => EmployeeAuth => EmployeeAuth)
-  state = {
-    isSignup: false
-  };
+  // (see component => AuthForm => AuthForm)
 
   //what happens when an employee clicks "submit"
-  employeeAuthClick = values => {
-    let userType;
+  loginClick = values => {
+    this.props.onAuth(values.username, values.password, "/login");
 
-    if (this.state.isSignup) {
-      userType = values.userType.value;
-    }
-
-    this.props.onAuth(
-      values.username,
-      values.password,
-      values.phoneNumber,
-      userType,
-      this.state.isSignup
-    );
-
-    alert("success");
-    this.props.resetEmployeeAuth();
+    alert("successfully logged in!");
+    this.props.resetAuthForm();
   };
 
-  //toggles whether the employee is signing up or logging in
-  switchAuthModeHandler = () => {
-    this.setState(prevState => {
-      return { isSignup: !prevState.isSignup };
-    });
+  handleCreateUser = () => {
+    this.props.history.replace("/signup");
   };
+
+  handleCreateUser;
 
   render() {
     let errorMessage = null;
@@ -48,16 +32,17 @@ class Auth extends Component {
       errorMessage = <p>{this.props.error.message}</p>;
     }
 
+    let createUsersButton;
+
     return (
       <Aux>
-        <EmployeeAuth
-          isSignup={this.state.isSignup}
+        <AuthForm
           userId={this.props.userId}
           userPermissions={this.props.userPermissions}
-          switchAuthModeHandler={this.switchAuthModeHandler}
-          employeeAuthClick={this.employeeAuthClick}
+          authClick={this.loginClick}
           isAuth={this.props.isAuth}
         />
+        {createUsersButton}
         {errorMessage}
       </Aux>
     );
@@ -77,11 +62,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    resetEmployeeAuth: () => dispatch(reset("EmployeeAuth")),
-    onAuth: (username, password, phoneNumber, userType, isSignup) =>
-      dispatch(
-        actions.auth(username, password, phoneNumber, userType, isSignup)
-      )
+    resetAuthForm: () => dispatch(reset("AuthForm")),
+    onAuth: (username, password, query) =>
+      dispatch(actions.auth(username, password, query))
   };
 };
 

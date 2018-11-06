@@ -1,4 +1,5 @@
 import * as actionTypes from "./actionTypes";
+import moment from "moment";
 import axios from "axios";
 
 //puts all the workorders from SQL into Redux (see renderWorkOrders)
@@ -17,34 +18,9 @@ export const getCurrentWorkOrder = currentWorkOrder => {
   };
 };
 
-// we get the currentWorkOrderId thanks to the work order data we previously set into Redux
-// see handleWorkOrderEdit in containers => WorkOrderList => WorkOrderList
-export const handleWorkOrderCompleted = currentWorkOrderId => {
-  let updatedStatus = {
-    status: "completed"
-  };
-
-  let url = "/api/workorders/" + currentWorkOrderId;
-  console.log(url);
-  return dispatch => {
-    console.log("progress");
-    console.log(url);
-    axios
-      .put(url, updatedStatus)
-      .then(response => {
-        url = "/api/workorders/";
-        console.log(response);
-        dispatch(renderWorkOrders(url));
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-};
-
 // action used to assign work orders to different users
 // WARNING: the below code is long and complicated
-export const assignWorkOrders = workOrderAssignmentData => {
+export const assignWorkOrders = (workOrderAssignmentData, isAlert) => {
   const url = "/api/workorderassignments";
 
   // we first get all of the data in SQL's WorkOrderAssignments table
@@ -97,15 +73,16 @@ export const assignWorkOrders = workOrderAssignmentData => {
           // if the request type is a PUT, then we PUT
           if (request.type === "PUT") {
             axios.put(url, request.data).then(response => {
-              console.log(response.data);
               dispatch(
                 sendWorkOrder(
                   response.data.Userinfo.phoneNumber,
                   response.data.Userinfo.username,
-                  response.data.Workorder.location
+                  response.data.Workorder.location,
+                  response.data.WorkorderId,
+                  isAlert
                 )
               );
-              dispatch(updateWorkOrderStatus(response.data.WorkorderId));
+              dispatch(updateWorkOrder(response.data.WorkorderId, "assigned"));
             });
           } else {
             // if the request type is a POST, then we POST
@@ -119,13 +96,15 @@ export const assignWorkOrders = workOrderAssignmentData => {
                 sendWorkOrder(
                   response.data.Userinfo.phoneNumber,
                   response.data.Userinfo.username,
-                  response.data.Workorder.location
+                  response.data.Workorder.location,
+                  response.data.WorkorderId,
+                  isAlert
                 )
               );
 
               // in addition, if this is a newly posted work assignment, we need to set
               // the work order's status from pending => assigned
-              dispatch(updateWorkOrderStatus(response.data.WorkorderId));
+              dispatch(updateWorkOrder(response.data.WorkorderId, "assigned"));
             });
           }
         });
@@ -143,8 +122,22 @@ export const renderWorkOrders = query => {
     axios
       .get(query)
       .then(response => {
-        console.log(response.data);
         dispatch(getWorkOrders(response.data));
+        response.data.forEach(workOrder => {
+          let createdFromNow = moment().diff(workOrder.createdAt, "minutes");
+          if (
+            workOrder.remind &&
+            workOrder.urgent &&
+            createdFromNow > 2 &&
+            workOrder.status !== "completed"
+          ) {
+            console.log(workOrder.id);
+            console.log(workOrder.status);
+            console.log(workOrder.remind);
+            dispatch(remindWorkOrder(workOrder.location));
+            dispatch(updateWorkOrder(workOrder.id, workOrder.status, false));
+          }
+        });
       })
       .catch(error => {
         console.log(error);
@@ -152,13 +145,38 @@ export const renderWorkOrders = query => {
   };
 };
 
-export const sendWorkOrder = (phoneNumber, username, location) => {
-  const url = "/api/twilio";
+export const sendWorkOrder = (
+  phoneNumber,
+  username,
+  location,
+  WorkorderId,
+  isAlert
+) => {
+  const url = "/api/twilio/workorderassigned";
+  return dispatch => {
+    if (isAlert) {
+      axios
+        .post(url, {
+          phoneNumber: phoneNumber,
+          username: username,
+          location: location,
+          WorkorderId: WorkorderId
+        })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
+};
+
+export const remindWorkOrder = location => {
+  const url = "/api/twilio/reminder";
   return dispatch => {
     axios
       .post(url, {
-        phoneNumber: phoneNumber,
-        username: username,
         location: location
       })
       .then(response => {
@@ -170,10 +188,11 @@ export const sendWorkOrder = (phoneNumber, username, location) => {
   };
 };
 
-export const updateWorkOrderStatus = workOrderId => {
+export const updateWorkOrder = (workOrderId, status, remind) => {
   return dispatch => {
     let updatedStatus = {
-      status: "assigned"
+      status: status,
+      remind: remind
     };
 
     let url = "/api/workorders/" + workOrderId;

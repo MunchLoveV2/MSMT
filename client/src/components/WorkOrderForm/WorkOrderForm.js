@@ -9,9 +9,6 @@ let WorkOrderForm = props => {
       {/* handleSubmit is given to use by Redux Forms, it helps us 
             determine what happens after the form is submitted */}
 
-      {/* we pass in employeeAuthClick (see container Auth), which
-            is executed after the form is submitted by Redux Forms */}
-
       <form onSubmit={handleSubmit(props.workOrderSubmit)}>
         <div>
           <label htmlFor="title">Title</label>
@@ -24,6 +21,10 @@ let WorkOrderForm = props => {
         <div>
           <label htmlFor="location">Location</label>
           <Field name="location" component="input" type="text" />
+        </div>
+        <div>
+          <label htmlFor="urgent">Urgent</label>
+          <Field name="urgent" component="input" type="checkbox" />
         </div>
 
         <button type="submit">Submit</button>

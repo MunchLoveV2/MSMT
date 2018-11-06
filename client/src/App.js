@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Layout from "./hoc/Layout/Layout";
 import { Route, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import Auth from "./containers/Auth/Auth";
+import Login from "./containers/Login/Login";
 import WorkOrder from "./containers/WorkOrder/WorkOrder";
 import Guest from "./containers/Guest/Guest";
 import WorkOrderList from "./containers/WorkOrderList/WorkOrderList";
@@ -10,7 +10,7 @@ import EditWorkOrder from "./containers/EditWorkOrder/EditWorkOrder";
 import WorkOrderSuccess from "./containers/WorkOrderSuccess/WorkOrderSuccess";
 import * as actions from "./store/actions/index";
 import ChatPlatform from "./components/ChatPlatform/ChatPlatform.js";
-import CreateUser from "./components/CreateUser/CreateUser.js";
+import CreateUser from "./containers/CreateUser/CreateUser";
 
 class App extends Component {
   componentDidMount() {
@@ -25,7 +25,7 @@ class App extends Component {
     return (
       <div>
         <Layout>
-          <Route path="/" exact component={Auth} />
+          <Route path="/" exact component={Login} />
           <Route path="/guest" exact component={Guest} />
           <Route path="/create" exact component={WorkOrder} />
           <Route path="/workorders" exact component={WorkOrderList} />

@@ -10,7 +10,11 @@ class EditWorkOrder extends Component {
   to "completed" in SQL */
   handleWorkOrderCompleted = () => {
     // function given to us by Redux
-    this.props.handleWorkOrderCompleted(this.props.currentWorkOrder.id);
+    this.props.updateWorkOrder(
+      this.props.currentWorkOrder.id,
+      "completed",
+      false
+    );
     // takes us back to the work orders table
     this.props.history.replace("/workorders");
   };
@@ -44,8 +48,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleWorkOrderCompleted: currentWorkOrderId =>
-      dispatch(actions.handleWorkOrderCompleted(currentWorkOrderId))
+    updateWorkOrder: (currentWorkOrderId, status, remind) =>
+      dispatch(actions.updateWorkOrder(currentWorkOrderId, status, remind))
   };
 };
 
