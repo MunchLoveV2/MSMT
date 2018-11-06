@@ -1,9 +1,4 @@
-module.exports = function(app, workorders, path) {
-  app.get("/", function(req, res) {
-    res.sendFile(
-      path.join(__dirname, "../", "../", "client", "public", "index.html")
-    );
-  });
+module.exports = function(app, workorders) {
   app.post("/api/workorders", function(req, res) {
     workorders
       .create(req.body)
