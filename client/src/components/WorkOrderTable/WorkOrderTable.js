@@ -3,7 +3,6 @@ import { Table } from "reactstrap";
 // import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
 class WorkOrderTable extends React.Component {
-
   render() {
     // below block of code is the logic for rendering the assign button
     // depending on the permissions of the user that is logged in
@@ -18,7 +17,7 @@ class WorkOrderTable extends React.Component {
           );
         }
       });
-    };
+    }
 
     // const selectRow = {
     //   mode: "checkbox"
@@ -26,7 +25,7 @@ class WorkOrderTable extends React.Component {
 
     return (
       <div>
-        <Table striped>
+        <Table hover>
           <thead>
             <tr>
               <th>ID</th>
@@ -38,8 +37,10 @@ class WorkOrderTable extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.workData}
-            {/* {selectRow} */}
+            <tr>
+              {this.props.workData}
+              {/* {selectRow} */}
+            </tr>
           </tbody>
         </Table>
         <button onClick={this.props.handleWorkOrderEdit}>Edit</button>

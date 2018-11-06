@@ -103,23 +103,20 @@ class WorkOrderList extends Component {
     }
   };
 
-  workData = () => {
-    this.workOrdersData.map((item, i) => {
-      return (
-        <tr key={i}>
-          <td>{item.id}</td>
-          <td>{item.issue}</td>
-          <td>{item.status}</td>
-          <td>{item.category}</td>
-          <td>{item.location}</td>
-        </tr>
-      );
-    })
-  };
-
-
-
-
+  // workData = () => {
+  //   this.workOrdersData.map((item, i) => {
+  //     return (
+  //       <tr>
+  //         <th scope="row" key={i} />
+  //         <td>{item.id}</td>
+  //         <td>{item.issue}</td>
+  //         <td>{item.status}</td>
+  //         <td>{item.category}</td>
+  //         <td>{item.location}</td>
+  //       </tr>
+  //     );
+  //   });
+  // };
 
   render() {
     let workOrdersTable;
@@ -152,10 +149,7 @@ class WorkOrderList extends Component {
 
         workOrdersData.push(item);
         console.log(workOrdersData);
-
-
       });
-
 
       workOrdersTable = (
         <WorkOrderTable
