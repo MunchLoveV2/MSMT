@@ -4,6 +4,8 @@ module.exports = function(sequelize, DataTypes) {
     category: DataTypes.TEXT,
     location: DataTypes.TEXT,
     status: DataTypes.TEXT,
+    urgent: DataTypes.BOOLEAN,
+    remind: DataTypes.BOOLEAN,
     pictureDataUri: {
       type: DataTypes.BLOB("long"),
       get() {

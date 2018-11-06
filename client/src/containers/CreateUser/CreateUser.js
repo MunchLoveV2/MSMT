@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import { reset } from "redux-form";
 import { withRouter } from "react-router-dom";
-import { Button } from "react-bootstrap";
 import AuthForm from "../../components/AuthForm/AuthForm";
 
 class CreateUser extends Component {

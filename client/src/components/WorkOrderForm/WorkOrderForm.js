@@ -22,6 +22,10 @@ let WorkOrderForm = props => {
           <label htmlFor="location">Location</label>
           <Field name="location" component="input" type="text" />
         </div>
+        <div>
+          <label htmlFor="urgent">Urgent</label>
+          <Field name="urgent" component="input" type="checkbox" />
+        </div>
 
         <button type="submit">Submit</button>
       </form>

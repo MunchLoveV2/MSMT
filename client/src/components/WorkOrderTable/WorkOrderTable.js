@@ -8,8 +8,6 @@ class WorkOrderTable extends React.Component {
     // depending on the permissions of the user that is logged in
     let assignButton;
     if (this.props.userId && this.props.userPermissions) {
-      console.log(this.props.userId);
-      console.log(this.props.userPermissions);
       this.props.userPermissions.forEach(permission => {
         if (permission.Permission.permission === "ASSIGN-TASKS") {
           assignButton = (
@@ -29,10 +27,6 @@ class WorkOrderTable extends React.Component {
         text: "Issue"
       },
       {
-        dataField: "category",
-        text: "Category"
-      },
-      {
         dataField: "location",
         text: "Location"
       },
@@ -43,6 +37,10 @@ class WorkOrderTable extends React.Component {
       {
         dataField: "status",
         text: "Status"
+      },
+      {
+        dataField: "createdFromNow",
+        text: "Time Created"
       }
     ];
 
