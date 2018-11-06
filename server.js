@@ -80,7 +80,7 @@ db.sequelize
   .sync()
   .then(function() {
     app.listen(process.env.PORT || 5000);
-    console.log("Nice! Database looks fine");
+    console.log("Nice! Database looks fine!");
   })
   .catch(function(err) {
     console.log(err, "Something went wrong with the Database Update!");
