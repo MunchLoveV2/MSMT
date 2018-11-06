@@ -1,0 +1,14 @@
+nav.navbar,
+.navbar-brand {
+  background: rgba(173, 103, 22, 0) !important;
+  padding-bottom: 0px;
+  margin-top: 0px;
+  font-size: 30pt;
+  font-weight: bold;
+  color: white !important;
+  font-family: "PT Mono", monospace;
+}
+
+div.nav.a.navbar-brand {
+  font-size: 3pt;
+}

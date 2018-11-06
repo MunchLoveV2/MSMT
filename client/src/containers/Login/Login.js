@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Aux from "../../hoc/Aux";
+import Auxil from "../../hoc/Auxil";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import { reset } from "redux-form";
@@ -35,7 +35,7 @@ class Auth extends Component {
     let createUsersButton;
 
     return (
-      <Aux>
+      <Auxil>
         <AuthForm
           userId={this.props.userId}
           userPermissions={this.props.userPermissions}
@@ -44,7 +44,7 @@ class Auth extends Component {
         />
         {createUsersButton}
         {errorMessage}
-      </Aux>
+      </Auxil>
     );
   }
 }

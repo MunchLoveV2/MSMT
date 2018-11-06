@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Aux from "../../hoc/Aux";
+import Auxil from "../../hoc/Auxil";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import WorkOrderTable from "../../components/WorkOrderTable/WorkOrderTable";
@@ -186,11 +186,11 @@ class WorkOrderList extends Component {
     }
 
     return (
-      <Aux>
+      <Auxil>
         {workOrdersTable}
         {usersSelect}
         {alertToggle}
-      </Aux>
+      </Auxil>
     );
   }
 }

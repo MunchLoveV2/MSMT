@@ -2,7 +2,7 @@ import React from "react";
 import { reduxForm, Field } from "redux-form";
 import DropdownList from "react-widgets/lib/DropdownList";
 import "react-widgets/dist/css/react-widgets.css";
-import Aux from "../../hoc/Aux";
+import Auxil from "../../hoc/Auxil";
 
 const renderDropdownList = ({
   input,
@@ -66,7 +66,7 @@ let AuthForm = props => {
     value || typeof value === "number" ? undefined : "Required";
 
   return (
-    <Aux>
+    <Auxil>
       {/* handleSubmit is given to use by Redux Form, it helps us 
             determine what happens after the form is submitted */}
 
@@ -90,7 +90,7 @@ let AuthForm = props => {
         {/* Below fields only show up when the user is signing up 
              (when the CREATE USER button is clicked)    */}
         {props.isSignup ? (
-          <Aux>
+          <Auxil>
             <Field
               name="phoneNumber"
               component={renderField}
@@ -108,14 +108,14 @@ let AuthForm = props => {
               textField="user"
               validate={[required]}
             />
-          </Aux>
+          </Auxil>
         ) : null}
 
         <button type="submit" disabled={submitting}>
           {props.isSignup ? "CREATE USER" : "LOGIN"}
         </button>
       </form>
-    </Aux>
+    </Auxil>
   );
 };
 

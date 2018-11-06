@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Aux from "../../hoc/Aux";
+import Auxil from "../../hoc/Auxil";
 import axios from "axios";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -60,10 +60,10 @@ class WorkOrder extends Component {
 
   render() {
     return (
-      <Aux>
+      <Auxil>
         <WorkOrderForm workOrderSubmit={this.workOrderSubmit} />
         <CameraApp onTakePhoto={this.onTakePhoto} />
-      </Aux>
+      </Auxil>
     );
   }
 }

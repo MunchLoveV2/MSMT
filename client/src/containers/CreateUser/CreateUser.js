@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Aux from "../../hoc/Aux";
+import Auxil from "../../hoc/Auxil";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import { reset } from "redux-form";
@@ -28,7 +28,7 @@ class CreateUser extends Component {
     }
 
     return (
-      <Aux>
+      <Auxil>
         <AuthForm
           isSignup={true}
           userId={this.props.userId}
@@ -37,7 +37,7 @@ class CreateUser extends Component {
           isAuth={this.props.isAuth}
         />
         {errorMessage}
-      </Aux>
+      </Auxil>
     );
   }
 }
