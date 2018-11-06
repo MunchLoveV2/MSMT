@@ -18,6 +18,7 @@ class WorkOrderTable extends React.Component {
         }
       });
     }
+    console.log("THESE ARE THE RPOPS>>>>>>", this.props);
 
     // const selectRow = {
     //   mode: "checkbox"
@@ -37,10 +38,13 @@ class WorkOrderTable extends React.Component {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              {this.props.workData}
-              {/* {selectRow} */}
-            </tr>
+            {this.props.workData}
+            {/* <th scope="row" key={this.props.workData.id} />
+            <td>{this.props.workData.issue}</td>
+            <td>{this.props.workData.category}</td>
+            <td>{this.props.workData.location}</td>
+            <td>{this.props.workData.assignedTo}</td>
+            <td>{this.props.workData.status}</td> */}
           </tbody>
         </Table>
         <button onClick={this.props.handleWorkOrderEdit}>Edit</button>

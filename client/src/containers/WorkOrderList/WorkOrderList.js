@@ -102,21 +102,21 @@ class WorkOrderList extends Component {
       this.setState({ selectedUser: null });
     }
   };
-
-  // workData = () => {
-  //   this.workOrdersData.map((item, i) => {
-  //     return (
-  //       <tr>
-  //         <th scope="row" key={i} />
-  //         <td>{item.id}</td>
-  //         <td>{item.issue}</td>
-  //         <td>{item.status}</td>
-  //         <td>{item.category}</td>
-  //         <td>{item.location}</td>
-  //       </tr>
-  //     );
-  //   });
-  // };
+  workData = () => {
+    this.workOrdersData.map((item, i) => {
+      return (
+        <tr>
+          <th scope="row" key={i} />
+          <td>{item.id}</td>
+          <td>{item.issue}</td>
+          <td>{item.category}</td>
+          <td>{item.location}</td>
+          <td>{item.assignedTo}</td>
+          <td>{item.status}</td>
+        </tr>
+      );
+    });
+  };
 
   render() {
     let workOrdersTable;
@@ -127,7 +127,15 @@ class WorkOrderList extends Component {
     //data needs to be loaded before anything can be rendered onto the page
     if (!this.props.workOrders[0] || !this.state.users) {
       workOrdersTable = <h1> loading </h1>;
+      console.log(
+        "HERE IS THIS.PROPS.WORKORDERS>>>>>",
+        this.props.workOrders[0]
+      );
     } else {
+      console.log(
+        "HERE IS THIS.PROPS.WORKORDERS>>>>>22222",
+        this.props.workOrders[3]
+      );
       //once data is stored in the redux store.... via props.renderWorkOrders, we can access it, and iterate over it
       this.props.workOrders.forEach(workOrder => {
         let item = {
@@ -150,6 +158,22 @@ class WorkOrderList extends Component {
         workOrdersData.push(item);
         console.log(workOrdersData);
       });
+
+      // workData = () => {
+      //   this.workOrdersData.map((item, i) => {
+      //     return (
+      //       <tr>
+      //         <th scope="row" key={i} />
+      //         <td>{item.id}</td>
+      //         <td>{item.issue}</td>
+      //         <td>{item.category}</td>
+      //         <td>{item.location}</td>
+      //         <td>{item.assignedTo}</td>
+      //         <td>{item.status}</td>
+      //       </tr>
+      //     );
+      //   });
+      // };
 
       workOrdersTable = (
         <WorkOrderTable

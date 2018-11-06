@@ -34,7 +34,6 @@ class WorkOrder extends Component {
       pictureDataUri: dataUri,
       status: "pending"
     };
-
     let userID;
 
     if (this.props.userID) {
