@@ -6,7 +6,7 @@ var session = require("express-session");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var app = express();
-var PORT = process.env.PORT || 3000;
+//var PORT = process.env.PORT || 5000;
 
 // websocket stuff
 var WSReadyStates = require("./constants/ws-ready-states");
@@ -17,7 +17,6 @@ app.use(cookieParser());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: "100000mb" }));
-
 
 // passport password auth stuff
 app.use(
@@ -80,12 +79,9 @@ app.ws("/chat", function(ws, req) {
 db.sequelize
   .sync()
   .then(function() {
+    app.listen(process.env.PORT || 5000);
     console.log("Nice! Database looks fine");
   })
   .catch(function(err) {
     console.log(err, "Something went wrong with the Database Update!");
   });
-
-const port = 5000;
-
-app.listen(port, () => `Server running on port ${port}`);
