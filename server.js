@@ -8,7 +8,7 @@ var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var app = express();
 //var PORT = process.env.PORT || 5000;
-
+o;
 // websocket stuff
 var WSReadyStates = require("./constants/ws-ready-states");
 var expressWs = require("express-ws")(app); // Websocket
@@ -54,7 +54,7 @@ const db = require("./server/models");
 // routes
 const authRoute = require("./server/routes/auth.js")(app, passport);
 
-require("./server/routes/apiRoutes.js")(app, db.Workorders);
+require("./server/routes/apiRoutes.js")(app, db.Workorders, path);
 require("./server/routes/permissionRoutes.js")(app, db.userPermissions);
 
 //load passport strategies

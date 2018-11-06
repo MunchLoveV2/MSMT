@@ -1,4 +1,4 @@
-module.exports = function(app, workorders) {
+module.exports = function(app, workorders, path) {
   app.get("/", function(req, res) {
     res.sendFile(
       path.join(__dirname, "../", "../", "client", "public", "index.html")
