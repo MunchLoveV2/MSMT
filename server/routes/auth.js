@@ -129,22 +129,25 @@ module.exports = function(app, passport) {
     const authToken = "fbc44c8484e99216a18c1127b72a5b4a";
     const client = require("twilio")(accountSid, authToken);
 
-    client.messages
-      .create({
-        body:
-          ". \n \nHello " +
-          req.body.username +
-          ", a new work order has been assigned to you for room " +
-          req.body.location +
-          "." +
-          "\n" +
-          "To mark as complete, type C" +
-          req.body.WorkorderId,
-        from: "+15626081666",
-        to: req.body.phoneNumber
-      })
-      .then(message => res.json(message.sid))
-      .done();
+    console.log(req.body.phoneNumber.length);
+    if (req.body.phoneNumber.length > 9) {
+      client.messages
+        .create({
+          body:
+            ". \n \nHello " +
+            req.body.username +
+            ", a new work order has been assigned to you for room " +
+            req.body.location +
+            "." +
+            "\n" +
+            "To mark as complete, type C" +
+            req.body.WorkorderId,
+          from: "+15626081666",
+          to: req.body.phoneNumber
+        })
+        .then(message => res.json(message.sid))
+        .done();
+    }
   });
 
   app.post("/api/twilio/reminder", function(req, res) {

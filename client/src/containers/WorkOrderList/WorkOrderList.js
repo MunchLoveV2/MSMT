@@ -5,9 +5,9 @@ import * as actions from "../../store/actions/index";
 import WorkOrderTable from "../../components/WorkOrderTable/WorkOrderTable";
 import AlertToggle from "../../components/AlertToggle/AlertToggle";
 import { withRouter } from "react-router-dom";
-import moment from "moment";
 import Select from "react-select";
 import axios from "axios";
+// import { WorkerList } from "twilio/lib/rest/taskrouter/v1/workspace/worker";
 
 class WorkOrderList extends Component {
   state = {
@@ -63,10 +63,15 @@ class WorkOrderList extends Component {
 
   // we use this function to get the information (in SQL) of the work order that is selected
   // we grab it from SQL and then put it into redux via props.getCurrentWorkOrder
-  handleWorkOrderEdit = () => {
-    // below syntax looks funky, I know, but I got it from the documentation of
-    // the bootstrap table (see components => WorkOrderTable)
-    const workOrderIds = this.child.node.selectionContext.state.selected;
+  handleWorkOrderEdit = values => {
+    const workOrders = Object.keys(values);
+    const workOrdersSelected = workOrders.filter(workOrderId => {
+      return values[workOrderId] === true;
+    });
+
+    const workOrderIds = workOrdersSelected.map(workOrderId =>
+      parseInt(workOrderId.slice(9))
+    );
 
     if (workOrderIds.length > 1) {
       alert("Can only edit one work order at once!");
@@ -87,11 +92,16 @@ class WorkOrderList extends Component {
 
   //gets the workorder that is selected (via WorkOrderTable)
   //POST or PUT to workOrderAssignments SQL table
-  handleWorkOrderAssign = () => {
-    // below syntax looks funky, I know, but I got it from the documentation of
-    // the bootstrap table (see components => WorkOrderTable)
-    const workOrderIds = this.child.node.selectionContext.state.selected;
+  handleWorkOrderAssign = values => {
     const selectedUser = this.state.selectedUser;
+    const workOrders = Object.keys(values);
+    const workOrdersSelected = workOrders.filter(workOrderId => {
+      return values[workOrderId] === true;
+    });
+
+    const workOrderIds = workOrdersSelected.map(workOrderId =>
+      parseInt(workOrderId.slice(9))
+    );
 
     if (!selectedUser || workOrderIds.length === 0) {
       alert("You have not selected a user or work order!");
@@ -115,53 +125,25 @@ class WorkOrderList extends Component {
   render() {
     let workOrdersTable;
     let usersSelect;
-    let workOrdersData = [];
     let alertToggle;
 
     //data needs to be loaded before anything can be rendered onto the page
-    if (!this.props.workOrders[0] || !this.state.users) {
+    if (!this.props.workOrders || !this.state.users) {
       workOrdersTable = <h1> loading </h1>;
     } else {
-      //once data is stored in the redux store.... via props.renderWorkOrders, we can access it, and iterate over it
-      this.props.workOrders.forEach(workOrder => {
-        let createdFromNow = moment().diff(workOrder.createdAt, "minutes");
-        createdFromNow =
-          moment.duration(createdFromNow, "minutes").humanize() + " ago";
-
-        let item = {
-          id: workOrder.id,
-          issue: workOrder.title,
-          status: workOrder.status,
-          category: workOrder.category,
-          location: workOrder.location,
-          dateCreated: workOrder.createdAt,
-          pictureDataUri: workOrder.pictureDataUri,
-          createdFromNow: createdFromNow
-        };
-
-        // the workorder is either set as unassigned, or gets assigned user in SQL
-        if (workOrder.workOrderAssignment) {
-          item.assignedTo = workOrder.workOrderAssignment.Userinfo.username;
-        } else {
-          item.assignedTo = "unassigned";
-        }
-
-        workOrdersData.push(item);
-      });
+      /*       let createdFromNow = moment().diff(workOrder.createdAt, "minutes");
+      createdFromNow =
+        moment.duration(createdFromNow, "minutes").humanize() + " ago"; */
 
       workOrdersTable = (
         <WorkOrderTable
           // give the above workOrdersData to the workOrderTable component
           userId={this.props.userId}
           userPermissions={this.props.userPermissions}
-          workOrders={workOrdersData}
+          workOrders={this.props.workOrders}
           onChange={this.handleWorkOrderSelect}
           handleWorkOrderEdit={this.handleWorkOrderEdit}
           handleWorkOrderAssign={this.handleWorkOrderAssign}
-          // syntax used based on documentation for WorkOrderTable (looks funky, I know)
-          ref={node => {
-            this.child = node;
-          }}
         />
       );
 

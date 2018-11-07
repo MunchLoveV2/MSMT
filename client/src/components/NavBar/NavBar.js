@@ -35,23 +35,15 @@ let NavBar = props => {
         <Nav className="ml-auto" navbar>
           <NavItem>
             {props.isAuth ? (
-              <Link to="/dashboard">
-                <NavLink>Dashboard</NavLink>
-              </Link>
+              <NavLink href="/dashboard">Dashboard</NavLink>
             ) : null}
           </NavItem>
           <NavItem>
-            {props.isAuth ? (
-              <Link to="/chat">
-                <NavLink>Chat</NavLink>
-              </Link>
-            ) : null}
+            {props.isAuth ? <NavLink href="/chat">Chat</NavLink> : null}
           </NavItem>
           <NavItem>
             {props.userType === "ADMIN" ? (
-              <Link to="/signup">
-                <NavLink>Create User</NavLink>
-              </Link>
+              <NavLink href="/signup">Create User</NavLink>
             ) : null}
           </NavItem>
           {props.isAuth ? (
@@ -75,9 +67,9 @@ let NavBar = props => {
           ) : null}
           <NavItem>
             {props.isAuth ? (
-              <Link to="/" onClick={props.authLogout}>
-                <NavLink>Logout</NavLink>
-              </Link>
+              <NavLink href="/" onClick={props.authLogout}>
+                Logout
+              </NavLink>
             ) : null}
           </NavItem>
         </Nav>

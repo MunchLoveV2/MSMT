@@ -1,80 +1,100 @@
 import React from "react";
-import BootstrapTable from "react-bootstrap-table-next";
-import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
+import { reduxForm, Field } from "redux-form";
+import { Table } from "reactstrap";
+import Auxil from "../../hoc/Auxil";
+import moment from "moment";
 
-class WorkOrderTable extends React.Component {
-  render() {
-    // below block of code is the logic for rendering the assign button
-    // depending on the permissions of the user that is logged in
-    let assignButton;
-    if (this.props.userId && this.props.userPermissions) {
-      this.props.userPermissions.forEach(permission => {
-        if (permission.Permission.permission === "ASSIGN-TASKS") {
-          assignButton = (
-            <button onClick={this.props.handleWorkOrderAssign}>Assign</button>
-          );
-        }
-      });
+let WorkOrderTable = props => {
+  const { handleSubmit } = props;
+
+  let assignButton;
+  if (props.userId && props.userPermissions) {
+    props.userPermissions.forEach(permission => {
+      if (permission.Permission.permission === "ASSIGN-TASKS") {
+        assignButton = (
+          <button
+            onClick={handleSubmit(values =>
+              props.handleWorkOrderAssign({
+                ...values
+              })
+            )}
+          >
+            Assign
+          </button>
+        );
+      }
+    });
+  }
+
+  console.log(props.workOrders);
+
+  const workOrdersData = props.workOrders.map(tableRow => {
+    let assignedTo;
+    if (tableRow.workOrderAssignment) {
+      assignedTo = tableRow.workOrderAssignment.Userinfo.username;
+    } else {
+      assignedTo = "unassigned";
     }
 
-    const columns = [
-      {
-        dataField: "id",
-        text: "ID"
-      },
-      {
-        dataField: "issue",
-        text: "Issue"
-      },
-      {
-        dataField: "location",
-        text: "Location"
-      },
-      {
-        dataField: "assignedTo",
-        text: "Assigned To"
-      },
-      {
-        dataField: "status",
-        text: "Status"
-      },
-      {
-        dataField: "createdFromNow",
-        text: "Time Created"
-      }
-    ];
-
-    const selectRow = {
-      mode: "checkbox"
-    };
+    let createdFromNow = moment().diff(tableRow.createdAt, "minutes");
+    createdFromNow =
+      moment.duration(createdFromNow, "minutes").humanize() + " ago";
 
     return (
-      <div>
-        {/* This is a table that is given to us via a third party package.
-        It's packed with cool features, but I'm not in love with. Might 
-        need to just build the table ourselves. */}
-
-        {/* Link to documentation for this table:
-        https://github.com/react-bootstrap-table/react-bootstrap-table2 */}
-
-        <BootstrapTable
-          keyField="id"
-          ref={node => {
-            this.node = node;
-          }}
-          data={this.props.workOrders}
-          columns={columns}
-          selectRow={selectRow}
-          onClick={(e, row, rowIndex) => {
-            console.log(`clicked on row with index: ${rowIndex}`);
-          }}
-        />
-
-        <button onClick={this.props.handleWorkOrderEdit}>Edit</button>
-        {assignButton}
-      </div>
+      <tr key={tableRow.id}>
+        <td>
+          <Field
+            name={"workOrder" + tableRow.id}
+            component="input"
+            type="checkbox"
+          />
+        </td>
+        <td> {tableRow.title} </td>
+        <td> {tableRow.location} </td>
+        <td> {createdFromNow} </td>
+        <td> {assignedTo} </td>
+        <td> {tableRow.status} </td>
+      </tr>
     );
-  }
-}
+  });
+
+  return (
+    <Auxil>
+      {/* handleSubmit is given to use by Redux Forms, it helps us 
+            determine what happens after the form is submitted */}
+
+      <form>
+        <Table striped>
+          <thead>
+            <tr>
+              <th>Selected</th>
+              <th>Issue</th>
+              <th>Location</th>
+              <th>Time Created</th>
+              <th>Assigned To</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>{workOrdersData}</tbody>
+        </Table>
+        <button
+          onClick={handleSubmit(values =>
+            props.handleWorkOrderEdit({
+              ...values
+            })
+          )}
+        >
+          Edit
+        </button>
+        {assignButton}
+      </form>
+    </Auxil>
+  );
+};
+
+WorkOrderTable = reduxForm({
+  form: "WorkOrderTable",
+  destroyOnUnmount: false
+})(WorkOrderTable);
 
 export default WorkOrderTable;

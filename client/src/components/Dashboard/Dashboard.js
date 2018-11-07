@@ -3,8 +3,6 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import { withRouter } from "react-router-dom";
 import { Table } from "reactstrap";
-import axios from "axios";
-import { runInNewContext } from "vm";
 
 class Dashboard extends React.Component {
   state = {
@@ -17,7 +15,6 @@ class Dashboard extends React.Component {
 
   render() {
     const user = localStorage.getItem("username");
-    const idUser = localStorage.getItem("userId");
     const d = new Date();
     const months = [
       "January",
@@ -49,9 +46,8 @@ class Dashboard extends React.Component {
     const year = d.getFullYear();
     const hour = d.getHours();
     const minute = d.getMinutes();
-    console;
     let dashboardData;
-    if (!this.props.workOrders[0] || !this.props.userId) {
+    if (!this.props.workOrders || !this.props.userId) {
       dashboardData = <h1> loading </h1>;
     } else {
       console.log(this.props.workOrders);
@@ -59,7 +55,7 @@ class Dashboard extends React.Component {
         if (
           tableRow.workOrderAssignment &&
           tableRow.workOrderAssignment.UserinfoId ===
-            parseInt(this.props.userId)
+            parseInt(this.props.userId, 10)
         ) {
           return (
             <tr>
