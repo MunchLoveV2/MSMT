@@ -34,6 +34,7 @@ class Dashboard extends React.Component {
 
   render() {
     const user = localStorage.getItem("username");
+    const idUser = localStorage.getItem("userId");
     const d = new Date();
     const months = [
       "January",
@@ -65,20 +66,40 @@ class Dashboard extends React.Component {
     const year = d.getFullYear();
     const hour = d.getHours();
     const minute = d.getMinutes();
-    const myWorkOrders = this.props.workOrders.filter(
-      workOrder => workOrder.workOrderAssignment === user
-    );
-    const workData = myWorkOrders.map((item, i) => {
-      return (
-        <tr>
-          <td>{item.id}</td>
-          <td>{item.title}</td>
-          <td>{item.category}</td>
-          <td>{item.location}</td>
-          <td>{item.status}</td>
-        </tr>
-      );
-    });
+    let workData;
+    let myWorkOrders = [];
+    if (!this.props.workOrders[0] || !this.state.users) {
+      workData = <h1> loading </h1>;
+    } else {
+      // console.log(this.props.workOrders[0].workOrderAssignment.UserinfoId);
+      console.log(this.props.workOrders[0].workOrderAssignment);
+      this.props.workOrders.forEach(function(element) {
+        console.log(element.workOrderAssignment.UserinfoId);
+        console.log("HI THIS IS MY USERID>>>>>>", idUser);
+        if (element.workOrderAssignment.UserinfoId == idUser) {
+          myWorkOrders.push(element);
+          console.log(myWorkOrders);
+        } else {
+          console.log("this doesn't belong to you");
+        }
+      });
+      // myWorkOrders = this.props.workOrders.filter(
+      //   workOrder => workOrder.workOrderAssignment.UserinfoId === idUser
+      // );
+      console.log(myWorkOrders);
+
+      workData = myWorkOrders.map((item, i) => {
+        return (
+          <tr>
+            <td>{item.id}</td>
+            <td>{item.title}</td>
+            <td>{item.category}</td>
+            <td>{item.location}</td>
+            <td>{item.status}</td>
+          </tr>
+        );
+      });
+    }
 
     // let dateTime = month + "/" + day + "/" + year;
     return (

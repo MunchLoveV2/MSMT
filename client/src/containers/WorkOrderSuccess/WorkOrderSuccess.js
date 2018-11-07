@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Aux from "../../hoc/Aux";
+import Auxil from "../../hoc/Auxil";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ProgressBar from "../../components/ProgressBar/ProgressBar.js";
@@ -10,10 +10,10 @@ class WorkOrderSuccess extends Component {
   };
   render() {
     return (
-      <Aux>
+      <Auxil>
         <p> Sucess! Thank you for submitting work order </p>
         <ProgressBar percentage={this.state.percentage} />
-      </Aux>
+      </Auxil>
     );
   }
 }

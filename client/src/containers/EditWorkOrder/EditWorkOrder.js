@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Aux from "../../hoc/Aux";
+import Auxil from "../../hoc/Auxil";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import * as actions from "../../store/actions/index";
@@ -10,7 +10,11 @@ class EditWorkOrder extends Component {
   to "completed" in SQL */
   handleWorkOrderCompleted = () => {
     // function given to us by Redux
-    this.props.handleWorkOrderCompleted(this.props.currentWorkOrder.id);
+    this.props.updateWorkOrder(
+      this.props.currentWorkOrder.id,
+      "completed",
+      false
+    );
     // takes us back to the work orders table
     this.props.history.replace("/workorders");
   };
@@ -27,11 +31,11 @@ class EditWorkOrder extends Component {
       image = <img src={this.props.currentWorkOrder.pictureDataUri} />;
     }
     return (
-      <Aux>
+      <Auxil>
         <h1> Issue: {title}</h1>
         {image}
         <button onClick={this.handleWorkOrderCompleted}>Completed</button>
-      </Aux>
+      </Auxil>
     );
   }
 }
@@ -44,8 +48,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleWorkOrderCompleted: currentWorkOrderId =>
-      dispatch(actions.handleWorkOrderCompleted(currentWorkOrderId))
+    updateWorkOrder: (currentWorkOrderId, status, remind) =>
+      dispatch(actions.updateWorkOrder(currentWorkOrderId, status, remind))
   };
 };
 

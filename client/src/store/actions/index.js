@@ -9,6 +9,6 @@ export {
   renderWorkOrders,
   assignWorkOrders,
   handleCurrentWorkOrder,
-  handleWorkOrderCompleted,
+  updateWorkOrder,
   getCurrentWorkOrder
 } from "./workOrders";

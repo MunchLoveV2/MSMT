@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Aux from "../../hoc/Aux";
+import Auxil from "../../hoc/Auxil";
 import GuestAuth from "../../components/GuestAuth/GuestAuth";
 
 class Guest extends Component {
@@ -10,9 +10,9 @@ class Guest extends Component {
 
   render() {
     return (
-      <Aux>
+      <Auxil>
         <GuestAuth guestAuthClick={this.guestAuthClick} />
-      </Aux>
+      </Auxil>
     );
   }
 }

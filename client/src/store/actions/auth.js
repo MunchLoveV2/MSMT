@@ -36,7 +36,7 @@ export const authFail = error => {
 };
 
 // **WARNING - incoming long lines of code~~~~~!!!~!~!~!~!~
-export const auth = (username, password, phoneNumber, userType, isSignup) => {
+export const auth = (username, password, query, phoneNumber, userType) => {
   let userId;
   return dispatch => {
     const authData = {
@@ -47,10 +47,7 @@ export const auth = (username, password, phoneNumber, userType, isSignup) => {
     };
 
     // url route depends on whether the user is logging in, or signing up
-    let url = "/login";
-    if (isSignup) {
-      url = "/signup";
-    }
+    let url = query;
 
     axios
       .post(url, authData)

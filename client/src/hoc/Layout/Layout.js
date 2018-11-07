@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Aux from "../Aux";
+import Auxil from "../Auxil";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import { withRouter } from "react-router-dom";
@@ -24,13 +24,15 @@ class Layout extends Component {
       <div>
         <NavBar
           isAuth={this.props.isAuth}
+          userId={this.props.userId}
+          userPermissions={this.props.userPermissions}
           authLogout={this.authLogout}
           userType={this.props.userType}
         />
 
-        <Aux>
+        <Auxil>
           <main>{this.props.children}</main>
-        </Aux>
+        </Auxil>
       </div>
     );
   }

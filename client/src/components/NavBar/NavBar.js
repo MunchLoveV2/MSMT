@@ -10,6 +10,8 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
+import "./NavBar.css";
+
 import { Link } from "react-router-dom";
 
 let NavBar = props => {

@@ -2,12 +2,12 @@ const express = require("express");
 
 // Password auth stuffs
 var passport = require("passport");
+var path = require("path");
 var session = require("express-session");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var app = express();
-var PORT = process.env.PORT || 3000;
-
+//var PORT = process.env.PORT || 5000;
 // websocket stuff
 var WSReadyStates = require("./constants/ws-ready-states");
 var expressWs = require("express-ws")(app); // Websocket
@@ -17,7 +17,6 @@ app.use(cookieParser());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: "100000mb" }));
-
 
 // passport password auth stuff
 app.use(
@@ -54,8 +53,16 @@ const db = require("./server/models");
 // routes
 const authRoute = require("./server/routes/auth.js")(app, passport);
 
-require("./server/routes/apiRoutes.js")(app, db.Workorders);
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
+require("./server/routes/apiRoutes.js")(app, db.Workorders, path);
 require("./server/routes/permissionRoutes.js")(app, db.userPermissions);
+
+app.get("*", (request, response) => {
+  response.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
 
 //load passport strategies
 require("./server/passport.js")(passport, db.Userinfo);
@@ -80,12 +87,9 @@ app.ws("/chat", function(ws, req) {
 db.sequelize
   .sync()
   .then(function() {
-    console.log("Nice! Database looks fine");
+    app.listen(process.env.PORT || 5000);
+    console.log("Nice! Database looks fine!!");
   })
   .catch(function(err) {
     console.log(err, "Something went wrong with the Database Update!");
   });
-
-const port = 5000;
-
-app.listen(port, () => `Server running on port ${port}`);

@@ -2,13 +2,19 @@
   "name": "reactexpress",
   "version": "1.0.0",
   "description": "Starter kit for creating React and Express apps",
+  "engines": {
+    "node": "8.9.x"
+  },
   "main": "server.js",
   "scripts": {
     "client-install": "cd client && npm install",
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build"
   },
   "author": "Brad Traversy",
   "license": "MIT",
@@ -20,7 +26,7 @@
     "axios": "^0.18.0",
     "base64-arraybuffer": "^0.1.5",
     "base64-arraybuffer-es6": "^0.4.1",
-    "bcrypt": "^3.0.1",
+    "bcrypt": "^3.0.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.3",
@@ -36,6 +42,7 @@
     "image-data-uri": "^2.0.0",
     "install": "^0.12.2",
     "jquery": "^3.3.1",
+    "moment": "^2.22.2",
     "multer": "^1.4.1",
     "multer-s3": "^2.7.0",
     "mysql": "^2.16.0",
@@ -44,6 +51,7 @@
     "npm": "^6.4.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "path": "^0.12.7",
     "popper.js": "^1.14.4",
     "react": "^16.5.2",
     "react-addons-update": "^15.6.2",
@@ -53,6 +61,7 @@
     "react-chat-widget": "^2.1.4-1",
     "react-dom": "^16.5.2",
     "react-html5-camera-photo": "^1.2.9",
+    "react-moment": "^0.8.3",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
