@@ -39,23 +39,25 @@ let NavBar = props => {
               </Link>
             ) : null}
           </NavItem>
-          <UncontrolledDropdown nav inNavbar>
-            <DropdownToggle nav caret>
-              Work Orders
-            </DropdownToggle>
-            <DropdownMenu right>
-              <DropdownItem>
-                {props.isAuth ? (
-                  <Link to="/create">Create Work Order</Link>
-                ) : null}
-              </DropdownItem>
-              <DropdownItem>
-                {props.userType === "ADMIN" ? (
-                  <Link to="/workorders">See All Work Orders</Link>
-                ) : null}
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
+          {props.isAuth ? (
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                Work Orders
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem>
+                  {props.isAuth ? (
+                    <Link to="/create">Create Work Order</Link>
+                  ) : null}
+                </DropdownItem>
+                <DropdownItem>
+                  {props.userType === "ADMIN" ? (
+                    <Link to="/workorders">See All Work Orders</Link>
+                  ) : null}
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          ) : null}
           <NavItem>
             {props.isAuth ? (
               <Link to="/" onClick={props.authLogout}>

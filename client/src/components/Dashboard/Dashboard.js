@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import { withRouter } from "react-router-dom";
 import { Table } from "reactstrap";
+import axios from "axios";
 
 class Dashboard extends React.Component {
   state = {
@@ -32,8 +33,6 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    let workOrdersData = [];
-
     const user = localStorage.getItem("username");
     const d = new Date();
     const months = [
@@ -66,12 +65,11 @@ class Dashboard extends React.Component {
     const year = d.getFullYear();
     const hour = d.getHours();
     const minute = d.getMinutes();
-    let workData = workOrdersData.map((item, i) => {
+    const workData = this.props.workOrders.map((item, i) => {
       return (
         <tr>
-          <th scope="row" key={i} />
           <td>{item.id}</td>
-          <td>{item.issue}</td>
+          <td>{item.title}</td>
           <td>{item.category}</td>
           <td>{item.location}</td>
           <td>{item.status}</td>
@@ -81,7 +79,7 @@ class Dashboard extends React.Component {
 
     // let dateTime = month + "/" + day + "/" + year;
     return (
-      <div className="col-md-6 center">
+      <div className="container col-md-6 center">
         <h2>Welcome Back {user}!</h2>
         <h3>
           Today is {day}, {month}/{date}/{year} and it is currently {hour}:
