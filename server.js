@@ -53,16 +53,16 @@ const db = require("./server/models");
 // routes
 const authRoute = require("./server/routes/auth.js")(app, passport);
 
-/* if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-app.get("*", (request, response) => {
-  response.sendFile(path.join(__dirname, "client/build", "index.html"));
-}); */
-
 require("./server/routes/apiRoutes.js")(app, db.Workorders, path);
 require("./server/routes/permissionRoutes.js")(app, db.userPermissions);
+
+app.get("*", (request, response) => {
+  response.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
 
 //load passport strategies
 require("./server/passport.js")(passport, db.Userinfo);
