@@ -8,6 +8,7 @@ import { withRouter } from "react-router-dom";
 import moment from "moment";
 import Select from "react-select";
 import axios from "axios";
+// import { WorkerList } from "twilio/lib/rest/taskrouter/v1/workspace/worker";
 
 class WorkOrderList extends Component {
   state = {
@@ -15,7 +16,8 @@ class WorkOrderList extends Component {
     selectedUser: null,
     selectedWorkOrder: null,
     users: null,
-    currentWorkOrder: null
+    currentWorkOrder: null,
+    checkboxRow: []
   };
 
   componentDidMount() {
@@ -66,7 +68,9 @@ class WorkOrderList extends Component {
   handleWorkOrderEdit = () => {
     // below syntax looks funky, I know, but I got it from the documentation of
     // the bootstrap table (see components => WorkOrderTable)
-    const workOrderIds = this.child.node.selectionContext.state.selected;
+    const workOrderIds = this.state.checkboxRow;
+    console.log(workOrderIds);
+
 
     if (workOrderIds.length > 1) {
       alert("Can only edit one work order at once!");
@@ -90,8 +94,10 @@ class WorkOrderList extends Component {
   handleWorkOrderAssign = () => {
     // below syntax looks funky, I know, but I got it from the documentation of
     // the bootstrap table (see components => WorkOrderTable)
-    const workOrderIds = this.child.node.selectionContext.state.selected;
+    const workOrderIds = this.state.checkboxRow;
     const selectedUser = this.state.selectedUser;
+    console.log(workOrderIds);
+    console.log(selectedUser);
 
     if (!selectedUser || workOrderIds.length === 0) {
       alert("You have not selected a user or work order!");
@@ -111,6 +117,15 @@ class WorkOrderList extends Component {
       this.setState({ selectedUser: null });
     }
   };
+
+  handleChangeCheckbox = (e) => {
+    let checkboxRow = [];
+    checkboxRow.push(e.target.value);
+    console.log(checkboxRow)
+    this.setState({
+      checkboxRow: checkboxRow
+    });
+  }
 
   render() {
     let workOrdersTable;
@@ -149,6 +164,8 @@ class WorkOrderList extends Component {
         workOrdersData.push(item);
       });
 
+      console.log(workOrdersData);
+
       workOrdersTable = (
         <WorkOrderTable
           // give the above workOrdersData to the workOrderTable component
@@ -158,10 +175,8 @@ class WorkOrderList extends Component {
           onChange={this.handleWorkOrderSelect}
           handleWorkOrderEdit={this.handleWorkOrderEdit}
           handleWorkOrderAssign={this.handleWorkOrderAssign}
-          // syntax used based on documentation for WorkOrderTable (looks funky, I know)
-          ref={node => {
-            this.child = node;
-          }}
+          handleChangeCheckbox={e => this.handleChangeCheckbox(e)}
+
         />
       );
 

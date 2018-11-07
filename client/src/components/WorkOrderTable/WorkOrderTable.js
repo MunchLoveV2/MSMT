@@ -1,8 +1,10 @@
 import React from "react";
-import BootstrapTable from "react-bootstrap-table-next";
-import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
+import { Table } from "reactstrap";
+import { FormControl } from "react-bootstrap";
 
 class WorkOrderTable extends React.Component {
+
+
   render() {
     // below block of code is the logic for rendering the assign button
     // depending on the permissions of the user that is logged in
@@ -17,59 +19,49 @@ class WorkOrderTable extends React.Component {
       });
     }
 
-    const columns = [
-      {
-        dataField: "id",
-        text: "ID"
-      },
-      {
-        dataField: "issue",
-        text: "Issue"
-      },
-      {
-        dataField: "location",
-        text: "Location"
-      },
-      {
-        dataField: "assignedTo",
-        text: "Assigned To"
-      },
-      {
-        dataField: "status",
-        text: "Status"
-      },
-      {
-        dataField: "createdFromNow",
-        text: "Time Created"
-      }
-    ];
+    const workOrdersData = this.props.workOrders.map(tableRow => {
+      return (
+        <tr>
+          <td>
+            <FormControl
+              type="checkbox"
+              id="selected"
+              value={tableRow.id}
+              onChange={this.props.handleChangeCheckbox}
+            />
+          </td>
+          <td scope="row"> {tableRow.id} </td>
+          <td> {tableRow.title} </td>
+          <td> {tableRow.category} </td>
+          <td> {tableRow.location} </td>
+          <td> {tableRow.assignedTo} </td>
+          <td> {tableRow.status} </td>
+        </tr>
+      )
+    });
 
-    const selectRow = {
-      mode: "checkbox"
-    };
+    console.log(workOrdersData);
+
 
     return (
       <div>
-        {/* This is a table that is given to us via a third party package.
-        It's packed with cool features, but I'm not in love with. Might 
-        need to just build the table ourselves. */}
-
-        {/* Link to documentation for this table:
-        https://github.com/react-bootstrap-table/react-bootstrap-table2 */}
-
-        <BootstrapTable
-          keyField="id"
-          ref={node => {
-            this.node = node;
-          }}
-          data={this.props.workOrders}
-          columns={columns}
-          selectRow={selectRow}
-          onClick={(e, row, rowIndex) => {
-            console.log(`clicked on row with index: ${rowIndex}`);
-          }}
-        />
-
+        <Table striped>
+          <thead>
+            <tr>
+              <th>Selected</th>
+              <th>ID</th>
+              <th>Issue</th>
+              <th>Category</th>
+              <th>Location</th>
+              <th>Assigned To</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {workOrdersData}
+            {/* {selectRow} */}
+          </tbody>
+        </Table>
         <button onClick={this.props.handleWorkOrderEdit}>Edit</button>
         {assignButton}
       </div>
