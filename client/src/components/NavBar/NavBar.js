@@ -15,6 +15,19 @@ import "./NavBar.css";
 import { Link } from "react-router-dom";
 
 let NavBar = props => {
+  // let createUsersNavItem;
+  // if (props.userId && props.userPermissions) {
+  //   props.userPermissions.forEach(permission => {
+  //     if (permission.Permission.permission === "CREATE-USERS") {
+  //       createUsersNavItem = (
+  //         <Link to="/signup">
+  //           <NavLink>Create User</NavLink>
+  //         </Link>
+  //       );
+  //     }
+  //   });
+  // }
+
   return (
     <div>
       <Navbar color="light" light expand="md">
