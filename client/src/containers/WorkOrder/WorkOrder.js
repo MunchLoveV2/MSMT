@@ -56,6 +56,8 @@ class WorkOrder extends Component {
       .catch(error => {
         throw error;
       });
+
+    this.props.history.replace("/workorders");
   };
 
   render() {

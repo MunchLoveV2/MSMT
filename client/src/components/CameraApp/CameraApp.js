@@ -10,6 +10,7 @@ class CameraApp extends Component {
     return (
       <div className="App">
         <Camera
+          idealFacingMode={"FACING_MODES.ENVIRONMENT"}
           onTakePhoto={dataUri => {
             this.props.onTakePhoto(dataUri);
           }}
