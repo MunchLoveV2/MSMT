@@ -65,7 +65,10 @@ class Dashboard extends React.Component {
     const year = d.getFullYear();
     const hour = d.getHours();
     const minute = d.getMinutes();
-    const workData = this.props.workOrders.map((item, i) => {
+    const myWorkOrders = this.props.workOrders.filter(
+      workOrder => workOrder.workOrderAssignment === user
+    );
+    const workData = myWorkOrders.map((item, i) => {
       return (
         <tr>
           <td>{item.id}</td>
