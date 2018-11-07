@@ -4,6 +4,7 @@ import * as actions from "../../store/actions/index";
 import { withRouter } from "react-router-dom";
 import { Table } from "reactstrap";
 import axios from "axios";
+import { runInNewContext } from "vm";
 
 class Dashboard extends React.Component {
   state = {
@@ -74,8 +75,8 @@ class Dashboard extends React.Component {
       // console.log(this.props.workOrders[0].workOrderAssignment.UserinfoId);
       console.log(this.props.workOrders[0].workOrderAssignment);
       this.props.workOrders.forEach(function(element) {
-        console.log(element.workOrderAssignment.UserinfoId);
-        console.log("HI THIS IS MY USERID>>>>>>", idUser);
+        // console.log(element.workOrderAssignment.UserinfoId);
+        // console.log("HI THIS IS MY USERID>>>>>>", idUser);
         if (element.workOrderAssignment.UserinfoId == idUser) {
           myWorkOrders.push(element);
           console.log(myWorkOrders);
