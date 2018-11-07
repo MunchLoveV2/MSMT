@@ -11,26 +11,8 @@ class Dashboard extends React.Component {
     users: null
   };
   componentDidMount() {
-    //renderWorkOrders has an axios get request, that hits the "api/workorders" route
-    //the function will then dispatch "getWorkOrders" (see store => actions => workOrders)
-    //getWorkOrder puts work order data in the redux store
     const query = "/api/workorders";
     this.props.renderWorkOrders(query);
-    axios("/api/users", {
-      method: "GET"
-    })
-      .then(response => {
-        const users = response.data.map(user => {
-          return {
-            label: user.username,
-            value: user.id
-          };
-        });
-        this.setState({ users: users });
-      })
-      .catch(error => {
-        throw error;
-      });
   }
 
   render() {
@@ -67,42 +49,30 @@ class Dashboard extends React.Component {
     const year = d.getFullYear();
     const hour = d.getHours();
     const minute = d.getMinutes();
-    let workData;
-    let myWorkOrders = [];
-    if (!this.props.workOrders[0] || !this.state.users) {
-      workData = <h1> loading </h1>;
+    console;
+    let dashboardData;
+    if (!this.props.workOrders[0] || !this.props.userId) {
+      dashboardData = <h1> loading </h1>;
     } else {
-      // console.log(this.props.workOrders[0].workOrderAssignment.UserinfoId);
-      console.log(this.props.workOrders[0].workOrderAssignment);
-      this.props.workOrders.forEach(function(element) {
-        // console.log(element.workOrderAssignment.UserinfoId);
-        // console.log("HI THIS IS MY USERID>>>>>>", idUser);
-        if (element.workOrderAssignment.UserinfoId == idUser) {
-          myWorkOrders.push(element);
-          console.log(myWorkOrders);
-        } else {
-          console.log("this doesn't belong to you");
+      console.log(this.props.workOrders);
+      dashboardData = this.props.workOrders.map(tableRow => {
+        if (
+          tableRow.workOrderAssignment &&
+          tableRow.workOrderAssignment.UserinfoId ===
+            parseInt(this.props.userId)
+        ) {
+          return (
+            <tr>
+              <td>{tableRow.id}</td>
+              <td>{tableRow.title}</td>
+              <td>{tableRow.category}</td>
+              <td>{tableRow.location}</td>
+              <td>{tableRow.status}</td>
+            </tr>
+          );
         }
       });
-      // myWorkOrders = this.props.workOrders.filter(
-      //   workOrder => workOrder.workOrderAssignment.UserinfoId === idUser
-      // );
-      console.log(myWorkOrders);
-
-      workData = myWorkOrders.map((item, i) => {
-        return (
-          <tr>
-            <td>{item.id}</td>
-            <td>{item.title}</td>
-            <td>{item.category}</td>
-            <td>{item.location}</td>
-            <td>{item.status}</td>
-          </tr>
-        );
-      });
     }
-
-    // let dateTime = month + "/" + day + "/" + year;
     return (
       <div className="container col-md-6 center">
         <h2>Welcome Back {user}!</h2>
@@ -121,7 +91,7 @@ class Dashboard extends React.Component {
               <th>Status</th>
             </tr>
           </thead>
-          <tbody>{workData}</tbody>
+          <tbody>{dashboardData}</tbody>
         </Table>
       </div>
     );
@@ -130,7 +100,6 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    users: state.auth.users,
     userId: state.auth.userId,
     workOrders: state.workOrders.workOrders
   };

@@ -49,7 +49,7 @@ let NavBar = props => {
           </NavItem>
           <NavItem>
             {props.userType === "ADMIN" ? (
-              <Link to="signup">
+              <Link to="/signup">
                 <NavLink>Create User</NavLink>
               </Link>
             ) : null}
