@@ -54,9 +54,7 @@ const db = require("./server/models");
 const authRoute = require("./server/routes/auth.js")(app, passport);
 
 app.get("/", function(req, res) {
-  res.sendFile(
-    path.join(__dirname, "./", "client", "public", "indexfef1.html")
-  );
+  res.sendFile(path.join(__dirname, "./", "client", "public", "index.html"));
 });
 
 require("./server/routes/apiRoutes.js")(app, db.Workorders, path);
