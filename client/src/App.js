@@ -11,10 +11,7 @@ import WorkOrderSuccess from "./containers/WorkOrderSuccess/WorkOrderSuccess";
 import * as actions from "./store/actions/index";
 import ChatPlatform from "./components/ChatPlatform/ChatPlatform.js";
 import CreateUser from "./containers/CreateUser/CreateUser";
-<<<<<<< HEAD
 import Dashboard from "./components/Dashboard/Dashboard";
-=======
->>>>>>> master
 
 class App extends Component {
   componentDidMount() {
