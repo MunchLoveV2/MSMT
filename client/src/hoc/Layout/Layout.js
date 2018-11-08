@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import { withRouter } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar.js";
-
+import ChatPlatform from "../../components/ChatPlatform/ChatPlatform";
 class Layout extends Component {
   authLogout = () => {
     if (this.props.username) {
@@ -33,6 +33,7 @@ class Layout extends Component {
         <Auxil>
           <main>{this.props.children}</main>
         </Auxil>
+        {this.props.isAuth ? <ChatPlatform /> : null}
       </div>
     );
   }

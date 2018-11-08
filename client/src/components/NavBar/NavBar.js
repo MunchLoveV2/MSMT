@@ -43,9 +43,6 @@ let NavBar = props => {
             ) : null}
           </NavItem>
           <NavItem>
-            {props.isAuth ? <NavLink href="/chat">Chat</NavLink> : null}
-          </NavItem>
-          <NavItem>
             {props.userType === "ADMIN" ? (
               <NavLink href="/signup">Create User</NavLink>
             ) : null}

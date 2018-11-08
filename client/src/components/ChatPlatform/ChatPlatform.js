@@ -1,29 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import { Widget, toggleWidget, addResponseMessage } from "react-chat-widget";
 import "react-chat-widget/lib/styles.css";
 // import axios from "axios";
 
-const boxBorder = {
-  border: "1px transparent black",
-  margin: "0px",
-  padding: "0px"
-};
-
-const card = {
-  width: "100%",
-  height: "100%"
-};
-
-const cardBody = {
-  width: "100%",
-  background: "rgb(0, 0, 0, 0.01)",
-  padding: "40px 20px 20px 20px",
-  height: "100%"
-};
 const user = localStorage.getItem("username");
 console.log("user", user);
 
-export default class Chat extends Component {
+class ChatPlatform extends React.Component {
   state = {
     isConnected: false,
     messages: [],
@@ -40,7 +23,7 @@ export default class Chat extends Component {
   }
 
   componentDidMount() {
-    toggleWidget();
+    // toggleWidget();
 
     let port;
     if (window["location"]["port"] === "") {
@@ -102,10 +85,11 @@ export default class Chat extends Component {
     return (
       <Widget
         handleNewUserMessage={this.handleNewUserMessage}
-        title="Live Chat OHOH"
+        title="Live Chat"
         subtitle={user}
-        senderPlaceHolder="Enter your message here!"
+        senderPlaceHolder="What can we help with?"
       />
     );
   }
 }
+export default ChatPlatform;
