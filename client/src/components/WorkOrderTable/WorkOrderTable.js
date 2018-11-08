@@ -63,7 +63,7 @@ let WorkOrderTable = props => {
       {/* handleSubmit is given to use by Redux Forms, it helps us 
             determine what happens after the form is submitted */}
 
-      <form>
+      <div className="container col-md-6 center">
         <Table striped>
           <thead>
             <tr>
@@ -87,7 +87,7 @@ let WorkOrderTable = props => {
           Edit
         </button>
         {assignButton}
-      </form>
+      </div>
     </Auxil>
   );
 };

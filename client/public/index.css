@@ -57,6 +57,16 @@ form {
   padding-bottom: 25px;
 }
 
+.container,
+center {
+  background: rgba(255, 255, 255, 0.616);
+  border-radius: 25px;
+  width: 300px;
+  padding-left: 25px;
+  margin-left: 50px;
+  padding-bottom: 25px;
+}
+
 /* .container {
   background: rgba(255, 255, 255, 0.616);
 } */
