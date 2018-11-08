@@ -24,10 +24,10 @@ class WorkOrderList extends Component {
     //getWorkOrder puts work order data in the redux store
     const query = "/api/workorders";
     this.props.renderWorkOrders(query);
-    this.interval = setInterval(() => {
+    /* this.interval = setInterval(() => {
       this.props.renderWorkOrders(query);
       //this.props.renderWorkOrders(query);
-    }, 60000);
+    }, 60000); */
 
     //the below axios get request hits the "api/users" route
     //gets data on all the users puts data in the local state
@@ -48,9 +48,9 @@ class WorkOrderList extends Component {
       });
   }
 
-  componentWillUnmount() {
+  /*   componentWillUnmount() {
     clearInterval(this.interval);
-  }
+  } */
 
   // gets the user that is selected (via Select) and sets state (selectedUser)
   handleUserSelect = selectedUser => {
