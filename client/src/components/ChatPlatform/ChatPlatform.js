@@ -100,41 +100,12 @@ export default class Chat extends Component {
 
   render() {
     return (
-      <div>
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <div
-                className="LiveChat"
-                style={{
-                  justifyContent: "center",
-                  width: "256px",
-                  height: "150px"
-                }}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-xl-2" style={boxBorder} />
-
-            <div className="col-xl-7 rounded-0" style={boxBorder}>
-              <div className="card rounded-0" style={card}>
-                <div className="card-header text-center font-weight-bold rounded-0" />
-                <div className="card-body rounded-0" style={cardBody} />
-              </div>
-            </div>
-
-            <div className="col-xl-3 rounded-0" style={boxBorder}>
-              <Widget
-                handleNewUserMessage={this.handleNewUserMessage}
-                title="Live Chat OHOH"
-                subtitle={user}
-                senderPlaceHolder="Enter your message here!"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+      <Widget
+        handleNewUserMessage={this.handleNewUserMessage}
+        title="Live Chat OHOH"
+        subtitle={user}
+        senderPlaceHolder="Enter your message here!"
+      />
     );
   }
 }
