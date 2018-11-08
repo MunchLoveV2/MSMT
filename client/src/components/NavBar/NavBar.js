@@ -31,7 +31,11 @@ let NavBar = props => {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">MSMT</NavbarBrand>
+        {props.isAuth ? (
+          <NavbarBrand href="/dashboard">MSMT</NavbarBrand>
+        ) : (
+          <NavbarBrand href="/">MSMT</NavbarBrand>
+        )}
         <Nav className="ml-auto" navbar>
           <NavItem>
             {props.isAuth ? (
@@ -73,6 +77,11 @@ let NavBar = props => {
               </NavLink>
             ) : null}
           </NavItem>
+          {props.isAuth ? null : (
+            <NavItem>
+              <NavLink href="/guest">Guest Login</NavLink>
+            </NavItem>
+          )}
         </Nav>
       </Navbar>
     </div>
