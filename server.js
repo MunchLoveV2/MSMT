@@ -9,8 +9,8 @@ var bodyParser = require("body-parser");
 var app = express();
 //var PORT = process.env.PORT || 5000;
 // websocket stuff
-var WSReadyStates = require("./constants/ws-ready-states");
-var expressWs = require("express-ws")(app); // Websocket
+// var WSReadyStates = require("./constants/ws-ready-states");
+// var expressWs = require("express-ws")(app); // Websocket
 
 // Middleware
 app.use(cookieParser());
@@ -68,20 +68,20 @@ app.get("/", (request, response) => {
 require("./server/passport.js")(passport, db.Userinfo);
 
 // Websocket
-/* app.ws("/chat", function(ws, req) {
-  ws.on("message", function(msg) {
-    console.log("backend msg: ", msg);
+// app.ws("/chat", function(ws, req) {
+//   ws.on("message", function(msg) {
+//     console.log("backend msg: ", msg);
 
-    expressWs.getWss().clients.forEach(function(client) {
-      console.log("# of clients connected", client._socket.server._connections);
+//     expressWs.getWss().clients.forEach(function(client) {
+//       console.log("# of clients connected", client._socket.server._connections);
 
-      if (client !== ws && client.readyState === WSReadyStates.OPEN) {
-        client.send(msg);
-        // console.log('msg',msg);
-      }
-    });
-  });
-}); */
+//       if (client !== ws && client.readyState === WSReadyStates.OPEN) {
+//         client.send(msg);
+//         // console.log('msg',msg);
+//       }
+//     });
+//   });
+// });
 
 //Sync Database
 db.sequelize
