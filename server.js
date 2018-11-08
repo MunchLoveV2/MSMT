@@ -68,7 +68,7 @@ app.get("*", (request, response) => {
 require("./server/passport.js")(passport, db.Userinfo);
 
 // Websocket
-app.ws("/chat", function(ws, req) {
+/* app.ws("/chat", function(ws, req) {
   ws.on("message", function(msg) {
     console.log("backend msg: ", msg);
 
@@ -81,7 +81,7 @@ app.ws("/chat", function(ws, req) {
       }
     });
   });
-});
+}); */
 
 //Sync Database
 db.sequelize
