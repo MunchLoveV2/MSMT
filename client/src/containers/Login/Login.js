@@ -14,7 +14,6 @@ class Auth extends Component {
   loginClick = values => {
     this.props.onAuth(values.username, values.password, "/login");
     this.props.resetAuthForm();
-    this.props.history.replace("/dashboard");
   };
 
   handleCreateUser = () => {
