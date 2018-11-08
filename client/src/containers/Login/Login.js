@@ -13,9 +13,8 @@ class Auth extends Component {
   //what happens when an employee clicks "submit"
   loginClick = values => {
     this.props.onAuth(values.username, values.password, "/login");
-
-    alert("successfully logged in!");
     this.props.resetAuthForm();
+    this.props.history.replace("/dashboard");
   };
 
   handleCreateUser = () => {

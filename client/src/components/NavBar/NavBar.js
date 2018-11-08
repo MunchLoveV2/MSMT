@@ -58,7 +58,8 @@ let NavBar = props => {
                   ) : null}
                 </DropdownItem>
                 <DropdownItem>
-                  {props.userType === "ADMIN" ? (
+                  {props.userType === "ADMIN" ||
+                  props.userType === "SUPERVISOR" ? (
                     <Link to="/workorders">See All Work Orders</Link>
                   ) : null}
                 </DropdownItem>
