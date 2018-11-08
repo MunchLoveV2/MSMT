@@ -90,6 +90,11 @@ class WorkOrderList extends Component {
     }
   };
 
+  /* handleTableRowClick = event => {
+    console.log(event.target.getAttribute("data-value"));
+    this.setState({ toggleExpand: true });
+  }; */
+
   //gets the workorder that is selected (via WorkOrderTable)
   //POST or PUT to workOrderAssignments SQL table
   handleWorkOrderAssign = values => {
@@ -139,6 +144,7 @@ class WorkOrderList extends Component {
         <WorkOrderTable
           // give the above workOrdersData to the workOrderTable component
           userId={this.props.userId}
+          handleTableRowClick={event => this.handleTableRowClick(event)}
           userPermissions={this.props.userPermissions}
           workOrders={this.props.workOrders}
           onChange={this.handleWorkOrderSelect}
