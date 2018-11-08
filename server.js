@@ -60,7 +60,7 @@ if (process.env.NODE_ENV === "production") {
 require("./server/routes/apiRoutes.js")(app, db.Workorders, path);
 require("./server/routes/permissionRoutes.js")(app, db.userPermissions);
 
-app.get("*", (request, response) => {
+app.get("/", (request, response) => {
   response.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
