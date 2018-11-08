@@ -19,6 +19,10 @@ class EditWorkOrder extends Component {
     this.props.history.replace("/workorders");
   };
 
+  handleBackButton = () => {
+    this.props.history.replace("/workorders");
+  };
+
   render() {
     // need to declare separate variable here because we get "this.props.currentWorkOrder" asynchronously
     // this.props.currentWorkOrder gives us access to the specific work order's information
@@ -35,6 +39,7 @@ class EditWorkOrder extends Component {
         <h1> Issue: {title}</h1>
         {image}
         <button onClick={this.handleWorkOrderCompleted}>Completed</button>
+        <button onClick={this.handleBackButton}>Back</button>
       </Auxil>
     );
   }

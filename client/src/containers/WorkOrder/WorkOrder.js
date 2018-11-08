@@ -3,6 +3,7 @@ import Auxil from "../../hoc/Auxil";
 import axios from "axios";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { reset } from "redux-form";
 import WorkOrderForm from "../../components/WorkOrderForm/WorkOrderForm";
 import CameraApp from "../../components/CameraApp/CameraApp";
 
@@ -52,18 +53,26 @@ class WorkOrder extends Component {
       method: "POST",
       data: workOrderData
     })
-      .then(response => response.data)
+      .then(response => {
+        this.props.resetWorkOrderForm();
+        this.props.history.replace("/workorders");
+      })
       .catch(error => {
         throw error;
       });
+  };
 
+  handleBackButton = () => {
     this.props.history.replace("/workorders");
   };
 
   render() {
     return (
       <Auxil>
-        <WorkOrderForm workOrderSubmit={this.workOrderSubmit} />
+        <WorkOrderForm
+          handleBackButton={this.HandleBackButton}
+          workOrderSubmit={this.workOrderSubmit}
+        />
         <CameraApp onTakePhoto={this.onTakePhoto} />
       </Auxil>
     );
@@ -76,4 +85,15 @@ const mapStateToProps = state => {
   };
 };
 
-export default withRouter(connect(mapStateToProps)(WorkOrder));
+const mapDispatchToProps = dispatch => {
+  return {
+    resetWorkOrderForm: () => dispatch(reset("workOrderForm"))
+  };
+};
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(WorkOrder)
+);

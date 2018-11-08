@@ -22,8 +22,7 @@ class CameraApp extends Component {
             this.setState({ idealFacingMode: FACING_MODES.USER });
           }}
         >
-          {" "}
-          FACING_MODES.USER{" "}
+          Front Camera
         </button>
 
         <button
@@ -31,8 +30,7 @@ class CameraApp extends Component {
             this.setState({ idealFacingMode: FACING_MODES.ENVIRONMENT });
           }}
         >
-          {" "}
-          FACING_MODES.ENVIRONMENT{" "}
+          Back Camera
         </button>
       </div>
     );

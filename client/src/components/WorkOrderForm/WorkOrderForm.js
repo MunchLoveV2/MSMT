@@ -26,7 +26,7 @@ let WorkOrderForm = props => {
           <label htmlFor="urgent">Urgent</label>
           <Field name="urgent" component="input" type="checkbox" />
         </div>
-
+        <button onClick={props.HandleBackButton}>Back</button>
         <button type="submit">Submit</button>
       </form>
     </Auxil>

@@ -83,7 +83,7 @@ let AuthForm = props => {
           name="password"
           component={renderField}
           label="Password"
-          type="text"
+          type="password"
           validate={[required]}
         />
 
