@@ -49,11 +49,11 @@ let WorkOrderTable = props => {
             type="checkbox"
           />
         </td>
-        <td> {tableRow.title} </td>
-        <td> {tableRow.location} </td>
-        <td> {createdFromNow} </td>
-        <td> {assignedTo} </td>
-        <td> {tableRow.status} </td>
+        <td>{tableRow.title}</td>
+        <td>{tableRow.location}</td>
+        <td>{createdFromNow}</td>
+        <td>{assignedTo}</td>
+        <td>{tableRow.status}</td>
       </tr>
     );
   });
