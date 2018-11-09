@@ -1,7 +1,7 @@
 {
-  "name": "reactexpress",
+  "name": "msmt",
   "version": "1.0.0",
-  "description": "Starter kit for creating React and Express apps",
+  "description": "Maintenence Staff Solutions",
   "engines": {
     "node": "8.9.x"
   },
@@ -17,7 +17,7 @@
     "heroku-postbuild": "npm run build"
   },
   "author": "Brad Traversy",
-  "license": "MIT",
+  "license": "Munch",
   "devDependencies": {
     "nodemon": "^1.14.6"
   },

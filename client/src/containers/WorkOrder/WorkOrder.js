@@ -55,7 +55,8 @@ class WorkOrder extends Component {
     })
       .then(response => {
         this.props.resetWorkOrderForm();
-        this.props.history.replace("/workorders");
+
+        this.props.history.replace("/success");
       })
       .catch(error => {
         throw error;
