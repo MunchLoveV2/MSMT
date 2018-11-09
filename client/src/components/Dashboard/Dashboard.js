@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import { withRouter } from "react-router-dom";
 import { Table } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
+import "./Dashboard.css";
 
 class Dashboard extends React.Component {
   state = {
@@ -70,26 +72,33 @@ class Dashboard extends React.Component {
       });
     }
     return (
-      <div className="container col-md-6 center">
-        <h2>Welcome Back {user}!</h2>
-        <h3>
-          Today is {day}, {month}/{date}/{year} and it is currently {hour}:
-          {minute}
-        </h3>
-        <h3>You have the following items on your to-do list today:</h3>
-        <Table hover>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Issue</th>
-              <th>Category</th>
-              <th>Location</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>{dashboardData}</tbody>
-        </Table>
-      </div>
+      <Container>
+        <Row xs="auto" />
+        <Row>
+          <Col xs="auto" className="Table">
+            <div className="Greeting">
+              <h2>Welcome back {user}!</h2>
+              <p>
+                Today is {day}, {month}/{date}/{year} and it is currently {hour}
+                :{minute}
+              </p>
+              <p>You have the following items on your to-do list today:</p>
+            </div>
+            <Table hover>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Issue</th>
+                  <th>Category</th>
+                  <th>Location</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>{dashboardData}</tbody>
+            </Table>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

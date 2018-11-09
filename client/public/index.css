@@ -8,7 +8,7 @@ body,
   background-position: center center;
 
   /* font-family: "Righteous", cursive; */
-  font-family: "Comfortaa", cursive;
+  font-family: "Merriweather Sans", sans-serif;
 }
 /* 
 #myVideo {
@@ -20,16 +20,16 @@ body,
   border: 20px double rgb(163, 45, 45);
 } */
 
-button {
+/* button {
   margin: 0px auto !important;
   padding: 7px 12px;
   font-size: 14px;
   background: #5dbcd6;
   color: rgb(248, 248, 248);
-  font-family: "Montserrat", sans-serif;
+  font-family: sans-serif;
   cursor: pointer;
   outline: 0;
-}
+} */
 input {
   color: black;
 }
@@ -57,7 +57,7 @@ form {
   padding-bottom: 25px;
 }
 
-.container,
+/* .container,
 center {
   background: rgba(255, 255, 255, 0.616);
   border-radius: 25px;
@@ -65,7 +65,7 @@ center {
   padding-left: 25px;
   margin-left: 50px;
   padding-bottom: 25px;
-}
+} */
 
 /* .container {
   background: rgba(255, 255, 255, 0.616);
