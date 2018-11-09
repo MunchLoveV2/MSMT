@@ -3,6 +3,8 @@ import { reduxForm, Field } from "redux-form";
 import { Table } from "reactstrap";
 import Auxil from "../../hoc/Auxil";
 import moment from "moment";
+import "./WorkOrderTable.css";
+import { Container, Row, Col, Button } from "reactstrap";
 
 let WorkOrderTable = props => {
   const { handleSubmit } = props;
@@ -12,7 +14,8 @@ let WorkOrderTable = props => {
     props.userPermissions.forEach(permission => {
       if (permission.Permission.permission === "ASSIGN-TASKS") {
         assignButton = (
-          <button
+          <Button
+            className="button"
             onClick={handleSubmit(values =>
               props.handleWorkOrderAssign({
                 ...values
@@ -20,7 +23,7 @@ let WorkOrderTable = props => {
             )}
           >
             Assign
-          </button>
+          </Button>
         );
       }
     });
@@ -59,36 +62,42 @@ let WorkOrderTable = props => {
   });
 
   return (
-    <Auxil>
+    <Container>
       {/* handleSubmit is given to use by Redux Forms, it helps us 
             determine what happens after the form is submitted */}
-
-      <div className="container col-md-6 center">
-        <Table striped>
-          <thead>
-            <tr>
-              <th>Selected</th>
-              <th>Issue</th>
-              <th>Location</th>
-              <th>Time Created</th>
-              <th>Assigned To</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>{workOrdersData}</tbody>
-        </Table>
-        <button
-          onClick={handleSubmit(values =>
-            props.handleWorkOrderEdit({
-              ...values
-            })
-          )}
-        >
-          Edit
-        </button>
-        {assignButton}
-      </div>
-    </Auxil>
+      <Row>
+        <Col xs="auto" className="Table">
+          <Table striped>
+            <thead>
+              <tr>
+                <th>Selected</th>
+                <th>Issue</th>
+                <th>Location</th>
+                <th>Time Created</th>
+                <th>Assigned To</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>{workOrdersData}</tbody>
+          </Table>
+        </Col>
+      </Row>
+      <Row>
+        <Col xs="auto" className="buttonRow">
+          <Button
+            className="button"
+            onClick={handleSubmit(values =>
+              props.handleWorkOrderEdit({
+                ...values
+              })
+            )}
+          >
+            Edit
+          </Button>
+          {assignButton}
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

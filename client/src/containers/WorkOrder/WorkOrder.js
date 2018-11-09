@@ -4,7 +4,9 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { reset } from "redux-form";
+import { Container, Row, Col, Button } from "reactstrap";
 import WorkOrderForm from "../../components/WorkOrderForm/WorkOrderForm";
+import "./WorkOrder.css";
 import CameraApp from "../../components/CameraApp/CameraApp";
 
 class WorkOrder extends Component {
@@ -69,13 +71,21 @@ class WorkOrder extends Component {
 
   render() {
     return (
-      <Auxil>
-        <WorkOrderForm
-          handleBackButton={this.HandleBackButton}
-          workOrderSubmit={this.workOrderSubmit}
-        />
-        <CameraApp onTakePhoto={this.onTakePhoto} />
-      </Auxil>
+      <Container>
+        <Row>
+          <Col xs="auto" className="workOrderForm">
+            <WorkOrderForm
+              handleBackButton={this.HandleBackButton}
+              workOrderSubmit={this.workOrderSubmit}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs="auto" className="Camera">
+            <CameraApp onTakePhoto={this.onTakePhoto} />
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

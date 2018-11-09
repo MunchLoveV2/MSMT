@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import WorkOrderTable from "../../components/WorkOrderTable/WorkOrderTable";
 import AlertToggle from "../../components/AlertToggle/AlertToggle";
+import UserSelect from "../../components/UserSelect/UserSelect";
 import { withRouter } from "react-router-dom";
-import Select from "react-select";
 import axios from "axios";
 // import { WorkerList } from "twilio/lib/rest/taskrouter/v1/workspace/worker";
 
@@ -152,9 +152,9 @@ class WorkOrderList extends Component {
       usersSelect = (
         //Select is a third party package (react-select)
         // documentation: https://github.com/JedWatson/react-select
-        <Select
+        <UserSelect
           value={this.state.selectedUser}
-          onChange={this.handleUserSelect}
+          changed={this.handleUserSelect}
           options={this.state.users}
         />
       );
@@ -170,7 +170,7 @@ class WorkOrderList extends Component {
     }
 
     return (
-      <Auxil>
+      <Auxil className="background">
         {workOrdersTable}
         {usersSelect}
         {alertToggle}
